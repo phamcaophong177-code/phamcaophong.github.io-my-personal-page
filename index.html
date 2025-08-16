@@ -11,7 +11,7 @@
         body {
             font-family: "Inter", sans-serif;
             /* Đây là nơi bạn có thể thay đổi URL ảnh nền của mình */
-            background-image: url('https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/501207992_122249941046205763_7111883970957905367_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=lb_LOcvG8KoQ7kNvwE13v3k&_nc_oc=AdmZbJnLzcwLfkxII_xrvjtIR646-YUHsN_LXJHwkS5X4839n94HeJ_efLlKqkEb8jCedaMlu_5Er-TZxNVNp3fg&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=ZXsh4lx1UGGLzFl0KsiqcA&oh=00_AfWS8_39Ix8IRFplUiPX9haaPZ7SbRHvUIztXVLqVN9VHA&oe=68A64202');
+            background-image: url('https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/501207992_122249941046205763_7111883970957905367_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=lb_LOcvG8KoQ7kNvwE13v3k&_nc_oc=AdmZbJnLzcwLfkxII_xrvjtIR646-YUHsN_LXJHwkS5X4839n94HeJ_efLlQqkEb8jCedaMlu_5Er-TZxNVNp3fg&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=ZXsh4lx1UGGLzFl0KsiqcA&oh=00_AfWS8_39Ix8IRFplUiPX9haaPZ7SbRHvUIztXVLqVN9VHA&oe=68A64202');
             background-size: cover; /* Đảm bảo ảnh bao phủ toàn bộ màn hình */
             background-position: center; /* Căn giữa ảnh nền */
             background-attachment: fixed; /* Giữ ảnh nền cố định khi cuộn */
@@ -22,7 +22,7 @@
         /* Lớp phủ (overlay) điều khiển độ đậm của background */
         #background-overlay {
             position: fixed; /* Giữ lớp phủ cố định trên màn hình */
-            top: 0; 
+            top: 0;
             left: 0;
             width: 100%;
             height: 100%;
@@ -129,6 +129,49 @@
             0% { background-position-x: 0; }
             100% { background-position-x: 1440px; } /* Đảm bảo vòng lặp liên tục */
         }
+
+        /* CSS cho hệ thống đánh giá sao */
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse; /* Đảo ngược thứ tự để sao 5 ở bên phải */
+            justify-content: center;
+            gap: 0.25rem; /* Khoảng cách giữa các sao */
+        }
+
+        .star-rating input[type="radio"] {
+            display: none; /* Ẩn radio button gốc */
+        }
+
+        .star-rating label {
+            cursor: pointer;
+            font-size: 2.5rem; /* Kích thước sao */
+            color: #ccc; /* Màu sao mặc định (chưa chọn) */
+            transition: color 0.2s ease-in-out;
+            /* SVG icon for star */
+            width: 2.5rem; /* Đảm bảo kích thước SVG khớp với font-size */
+            height: 2.5rem;
+        }
+
+        .star-rating svg {
+            fill: currentColor; /* Dùng màu từ parent (label) */
+            stroke: currentColor; /* Dùng màu từ parent (label) */
+            stroke-width: 0; /* Không có viền */
+        }
+
+        /* Màu khi di chuột qua hoặc đã chọn */
+        .star-rating input[type="radio"]:checked ~ label,
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: #ffc107; /* Màu vàng cam khi chọn hoặc hover */
+        }
+
+        /* Màu khi di chuột ra khỏi sao đã chọn (để giữ màu vàng) */
+        .star-rating input[type="radio"]:checked + label:hover,
+        .star-rating input[type="radio"]:checked ~ label:hover,
+        .star-rating input[type="radio"]:checked ~ label:hover ~ label,
+        .star-rating label:hover ~ input[type="radio"]:checked ~ label {
+            color: #ffc107;
+        }
     </style>
 </head>
 <body>
@@ -217,12 +260,15 @@
                 </div>
             </section>
 
-            <!-- Phần Thông tin liên hệ khách hàng -->
+            <!-- Phần Thông tin liên hệ và phản hồi khách hàng -->
             <section class="mb-10">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2">
-                    Thông Tin Liên Hệ Khách Hàng
+                    Thông Tin Liên Hệ & Phản Hồi Khách Hàng
                 </h2>
-                <form class="space-y-4 text-gray-700">
+                <form id="customerFeedbackForm" class="space-y-4 text-gray-700">
+                    <p class="text-center text-lg font-semibold text-gray-800">
+                        Vui lòng để lại thông tin và đánh giá của bạn:
+                    </p>
                     <div>
                         <label for="clientName" class="block text-lg font-semibold mb-1">Họ và tên:</label>
                         <input type="text" id="clientName" name="clientName" placeholder="Nhập họ và tên của bạn" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white bg-opacity-70" required>
@@ -246,13 +292,38 @@
                             </select>
                         </div>
                     </div>
+
+                    <div class="text-center pt-4 border-t border-gray-300">
+                        <label class="block text-lg font-semibold mb-2">Đánh giá của bạn:</label>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5" required><label for="star5" title="5 sao">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63L2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            </label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4" title="4 sao">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63L2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            </label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3" title="3 sao">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63L2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            </label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2" title="2 sao">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63L2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            </label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1" title="1 sao">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63L2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="feedbackMessage" class="block text-lg font-semibold mb-1">Phản hồi của bạn:</label>
+                        <textarea id="feedbackMessage" name="feedbackMessage" rows="5" placeholder="Nhập phản hồi của bạn về trang web..." class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white bg-opacity-70" required></textarea>
+                    </div>
                     <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-md hover:bg-blue-700 transition duration-300">
-                        Gửi Thông Tin
+                        Gửi Phản Hồi
                     </button>
                 </form>
             </section>
 
-            <!-- Phần Liên hệ cá nhân -->
+            <!-- Phần Liên hệ cá nhân (giữ nguyên) -->
             <section class="text-center">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2 inline-block">
                     Liên Hệ Cá Nhân
@@ -273,12 +344,12 @@
         // Lấy tham chiếu đến các phần tử cần tương tác
         const mainContentBox = document.getElementById('main-content-box');
         const backgroundOverlay = document.getElementById('background-overlay');
+        const customerFeedbackForm = document.getElementById('customerFeedbackForm'); // Đã đổi ID form
 
         // Thêm sự kiện khi di chuột vào hộp nội dung chính
         mainContentBox.addEventListener('mouseenter', () => {
             // Khi chuột vào: background sáng hơn, nội dung rõ hơn
             backgroundOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.3)'; /* Nền ít đậm hơn */
-            // Điều chỉnh để rõ ràng hơn rất nhiều (mờ đục hoàn toàn)
             mainContentBox.style.backgroundColor = 'rgba(255, 255, 255, 1)'; /* Hoàn toàn mờ đục */
             mainContentBox.style.backdropFilter = 'blur(0px)'; /* Không làm mờ */
             mainContentBox.style.borderColor = 'rgba(255, 255, 255, 1)'; /* Viền rõ ràng hơn */
@@ -291,6 +362,47 @@
             mainContentBox.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'; /* Mờ tan (5% mờ) */
             mainContentBox.style.backdropFilter = 'blur(20px)'; /* Mờ mạnh hơn để tạo sương mù */
             mainContentBox.style.borderColor = 'rgba(255, 255, 255, 0.1)'; /* Viền mờ hơn */
+        });
+
+        // Xử lý gửi thông tin khách hàng và phản hồi
+        customerFeedbackForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Ngăn form gửi đi theo cách truyền thống
+
+            // Lấy thông tin khách hàng
+            const clientName = document.getElementById('clientName').value;
+            const clientPhone = document.getElementById('clientPhone').value;
+            const clientAge = document.getElementById('clientAge').value;
+            const clientGender = document.getElementById('clientGender').value;
+
+            // Lấy thông tin phản hồi
+            const rating = document.querySelector('input[name="rating"]:checked');
+            const feedbackMessage = document.getElementById('feedbackMessage').value;
+
+            // Xây dựng tiêu đề email
+            let subject = `Phản hồi từ khách hàng: ${clientName} - ${clientPhone}`;
+
+            // Xây dựng nội dung email
+            let body = `THÔNG TIN KHÁCH HÀNG:\n`;
+            body += `Họ và tên: ${clientName}\n`;
+            body += `Số điện thoại: ${clientPhone}\n`;
+            body += `Tuổi: ${clientAge || 'Không cung cấp'}\n`; // Nếu không điền tuổi, hiển thị 'Không cung cấp'
+            body += `Giới tính: ${clientGender || 'Không cung cấp'}\n\n`; // Nếu không chọn giới tính, hiển thị 'Không cung cấp'
+
+            body += `PHẢN HỒI & ĐÁNH GIÁ:\n`;
+            body += `Đánh giá: ${rating ? rating.value + " sao" : "Không đánh giá"}\n`;
+            body += `Nội dung phản hồi:\n${feedbackMessage}`;
+
+            // Mã hóa nội dung để tránh lỗi URL
+            const mailtoLink = `mailto:phamcaophong177@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+            // Mở ứng dụng email mặc định của người dùng
+            window.location.href = mailtoLink;
+
+            // Tùy chọn: Hiển thị thông báo cho người dùng
+            alert('Cảm ơn bạn đã gửi thông tin và phản hồi! Ứng dụng email của bạn sẽ mở ra để hoàn tất việc gửi.');
+
+            // Tùy chọn: Xóa form sau khi gửi
+            // customerFeedbackForm.reset();
         });
     </script>
 </body>
