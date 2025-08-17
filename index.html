@@ -31,22 +31,25 @@
             transition: background-color 0.5s ease; /* Hiệu ứng chuyển đổi mượt mà */
         }
 
-        /* Vùng chứa bông tuyết */
-        #snowflake-container {
-            position: fixed; /* Giữ bông tuyết cố định trên màn hình */
+        /* Vùng chứa bông tuyết và lá */
+        #particle-container {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none; /* Không cho phép tương tác với chuột */
             z-index: 5; /* Nằm trên lớp phủ nền nhưng dưới nội dung chính */
-            overflow: hidden; /* Quan trọng: Ẩn thanh cuộn của riêng container tuyết */
+            overflow: hidden; /* Quan trọng: Ẩn thanh cuộn của riêng container */
+            opacity: 1; /* Mặc định: rõ (cho hiệu ứng bão tuyết) */
+            backdrop-filter: blur(0px); /* Mặc định: không mờ */
+            transition: opacity 0.5s ease, backdrop-filter 0.5s ease; /* Chuyển đổi mượt mà */
         }
 
         /* Vùng bọc nội dung chính, đảm bảo nội dung nằm trên lớp phủ và được căn giữa */
         .content-wrapper {
             position: relative;
-            z-index: 10; /* Nằm trên lớp phủ và bông tuyết */
+            z-index: 10; /* Nằm trên lớp phủ và các hạt */
             display: flex;
             flex-direction: column; /* Cho phép các phần tử con xếp dọc */
             justify-content: center; /* Căn giữa theo chiều ngang */
@@ -185,16 +188,33 @@
             color: #ffc107;
         }
 
-        /* ---- CSS cho hiệu ứng bông tuyết ---- */
-        .snowflake {
+        /* ---- CSS cho hiệu ứng hạt (tuyết/lá) ---- */
+        .particle {
             position: absolute;
-            background-color: #fff; /* Màu trắng */
-            border-radius: 50%; /* Hình tròn */
+            background-color: #fff; /* Màu trắng cho tuyết/lá */
+            border-radius: 50%; /* Mặc định hình tròn */
             opacity: 0; /* Bắt đầu với độ trong suốt bằng 0 */
-            animation: snowflake-fall linear infinite;
+            animation: particle-fall linear infinite;
         }
 
-        @keyframes snowflake-fall {
+        .particle.snowflake {
+            /* Sử dụng SVG cho bông tuyết 5 cánh */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M12 2L9.19 8.63L2 9.24l5.46 4.73L5.82 21l6.18-3.73l6.18 3.73l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 0; /* Bỏ border-radius để hiển thị hình dạng SVG */
+        }
+
+        .particle.leaf {
+            /* Tạo hình dạng lá đơn giản bằng CSS */
+            background-color: #f0f8ff; /* Màu xanh nhạt/trắng cho lá tuyết */
+            border-radius: 40% 0 / 50% 50%; /* Hình dạng lá */
+            transform: rotate(var(--leaf-rotation, 0deg)); /* Xoay lá */
+            animation: particle-fall linear infinite, leaf-spin linear infinite;
+        }
+
+        @keyframes particle-fall {
             0% {
                 transform: translateY(-10vh) translateX(0); /* Bắt đầu từ trên cao */
                 opacity: 0;
@@ -210,11 +230,16 @@
                 opacity: 0; /* Biến mất khi chạm đáy */
             }
         }
+
+        @keyframes leaf-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
     <div id="background-overlay"></div> <!-- Lớp phủ nền động -->
-    <div id="snowflake-container"></div> <!-- Vùng chứa bông tuyết -->
+    <div id="particle-container"></div> <!-- Vùng chứa bông tuyết và lá -->
 
     <div class="content-wrapper">
         <div id="main-content-box" class="rounded-xl shadow-lg p-8 md:p-12 max-w-4xl w-full mx-auto">
@@ -383,103 +408,112 @@
         // Lấy tham chiếu đến các phần tử cần tương tác
         const mainContentBox = document.getElementById('main-content-box');
         const backgroundOverlay = document.getElementById('background-overlay');
-        const customerFeedbackForm = document.getElementById('customerFeedbackForm'); // Đã đổi ID form
-        const snowflakeContainer = document.getElementById('snowflake-container'); // Lấy vùng chứa bông tuyết
+        const customerFeedbackForm = document.getElementById('customerFeedbackForm');
+        const particleContainer = document.getElementById('particle-container'); // Đã đổi tên từ snowflakeContainer
 
         // Thêm sự kiện khi di chuột vào hộp nội dung chính
         mainContentBox.addEventListener('mouseenter', () => {
             // Khi chuột vào: background sáng hơn, nội dung rõ hơn
-            backgroundOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.3)'; /* Nền ít đậm hơn */
-            mainContentBox.style.backgroundColor = 'rgba(255, 255, 255, 1)'; /* Hoàn toàn mờ đục */
-            mainContentBox.style.backdropFilter = 'blur(0px)'; /* Không làm mờ */
-            mainContentBox.style.borderColor = 'rgba(255, 255, 255, 1)'; /* Viền rõ ràng hơn */
+            backgroundOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.3)';
+            mainContentBox.style.backgroundColor = 'rgba(255, 255, 255, 1)';
+            mainContentBox.style.backdropFilter = 'blur(0px)';
+            mainContentBox.style.borderColor = 'rgba(255, 255, 255, 1)';
+            
+            // Hiệu ứng hạt mờ dần khi chuột vào
+            particleContainer.style.opacity = '0.2'; /* Mờ đi rất nhiều */
+            particleContainer.style.backdropFilter = 'blur(0px)'; /* Không làm mờ hạt */
         });
 
         // Thêm sự kiện khi di chuột ra khỏi hộp nội dung chính
         mainContentBox.addEventListener('mouseleave', () => {
             // Khi chuột ra: background đậm lên, nội dung mờ tan như sương mù
-            backgroundOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)'; /* Nền đậm hơn */
-            mainContentBox.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'; /* Mờ tan (5% mờ) */
-            mainContentBox.style.backdropFilter = 'blur(20px)'; /* Mờ mạnh hơn để tạo sương mù */
-            mainContentBox.style.borderColor = 'rgba(255, 255, 255, 0.1)'; /* Viền mờ hơn */
+            backgroundOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+            mainContentBox.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+            mainContentBox.style.backdropFilter = 'blur(20px)';
+            mainContentBox.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+            // Hiệu ứng hạt rõ và dày đặc hơn (bão tuyết) khi chuột ra
+            particleContainer.style.opacity = '1'; /* Rõ hoàn toàn */
+            particleContainer.style.backdropFilter = 'blur(5px)'; /* Làm mờ hạt nhẹ để tạo cảm giác bão tuyết */
         });
 
         // Xử lý gửi thông tin khách hàng và phản hồi
         customerFeedbackForm.addEventListener('submit', (event) => {
-            event.preventDefault(); // Ngăn form gửi đi theo cách truyền thống
+            event.preventDefault();
 
-            // Lấy thông tin khách hàng
             const clientName = document.getElementById('clientName').value;
             const clientPhone = document.getElementById('clientPhone').value;
             const clientAge = document.getElementById('clientAge').value;
             const clientGender = document.getElementById('clientGender').value;
 
-            // Lấy thông tin phản hồi
             const rating = document.querySelector('input[name="rating"]:checked');
             const feedbackMessage = document.getElementById('feedbackMessage').value;
 
-            // Xây dựng tiêu đề email
             let subject = `Phản hồi từ khách hàng: ${clientName} - ${clientPhone}`;
-
-            // Xây dựng nội dung email
             let body = `THÔNG TIN KHÁCH HÀNG:\n`;
             body += `Họ và tên: ${clientName}\n`;
             body += `Số điện thoại: ${clientPhone}\n`;
-            body += `Tuổi: ${clientAge || 'Không cung cấp'}\n`; // Nếu không điền tuổi, hiển thị 'Không cung cấp'
-            body += `Giới tính: ${clientGender || 'Không cung cấp'}\n\n`; // Nếu không chọn giới tính, hiển thị 'Không cung cấp'
+            body += `Tuổi: ${clientAge || 'Không cung cấp'}\n`;
+            body += `Giới tính: ${clientGender || 'Không cung cấp'}\n\n`;
 
             body += `PHẢN HỒI & ĐÁNH GIÁ:\n`;
             body += `Đánh giá: ${rating ? rating.value + " sao" : "Không đánh giá"}\n`;
             body += `Nội dung phản hồi:\n${feedbackMessage}`;
 
-            // Mã hóa nội dung để tránh lỗi URL
             const mailtoLink = `mailto:phamcaophong177@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-            // Mở ứng dụng email mặc định của người dùng
             window.location.href = mailtoLink;
-
-            // Tùy chọn: Hiển thị thông báo cho người dùng
             alert('Cảm ơn bạn đã gửi thông tin và phản hồi! Ứng dụng email của bạn sẽ mở ra để hoàn tất việc gửi.');
-
-            // Tùy chọn: Xóa form sau khi gửi
-            // customerFeedbackForm.reset();
         });
 
-        // ---- JavaScript cho hiệu ứng bông tuyết ----
-        function createSnowflake() {
-            const snowflake = document.createElement('div');
-            snowflake.classList.add('snowflake');
+        // ---- JavaScript cho hiệu ứng hạt (tuyết/lá) ----
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
 
-            // Kích thước bông tuyết ngẫu nhiên (nhỏ và vừa)
-            const size = Math.random() * 4 + 3; // Từ 3px đến 7px (tăng nhẹ kích thước)
-            snowflake.style.width = `${size}px`;
-            snowflake.style.height = `${size}px`;
+            // Quyết định là bông tuyết hay lá
+            const isSnowflake = Math.random() < 0.7; // 70% là tuyết, 30% là lá
+            if (isSnowflake) {
+                particle.classList.add('snowflake');
+            } else {
+                particle.classList.add('leaf');
+            }
 
-            // Vị trí bắt đầu ngẫu nhiên (từ 0% đến 100% chiều rộng màn hình)
-            snowflake.style.left = `${Math.random() * 100}vw`;
+            // Kích thước ngẫu nhiên
+            const size = isSnowflake ? Math.random() * 4 + 3 : Math.random() * 8 + 5; // Tuyết 3-7px, Lá 5-13px
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+
+            // Vị trí bắt đầu ngẫu nhiên
+            particle.style.left = `${Math.random() * 100}vw`;
 
             // Tốc độ rơi ngẫu nhiên
             const duration = Math.random() * 10 + 5; // Từ 5 đến 15 giây
-            snowflake.style.animationDuration = `${duration}s`;
+            particle.style.animationDuration = `${duration}s`;
 
             // Độ trôi ngang ngẫu nhiên
             const xDrift = (Math.random() - 0.5) * 100; // Từ -50vw đến 50vw
-            snowflake.style.setProperty('--x-drift', `${xDrift}vw`);
+            particle.style.setProperty('--x-drift', `${xDrift}vw`);
 
-            // Độ trễ animation ngẫu nhiên để bông tuyết xuất hiện không đồng loạt
-            snowflake.style.animationDelay = `-${Math.random() * duration}s`; // Bắt đầu từ giữa animation
+            // Độ trễ animation ngẫu nhiên để xuất hiện không đồng loạt
+            particle.style.animationDelay = `-${Math.random() * duration}s`;
 
-            snowflakeContainer.appendChild(snowflake);
+            // Nếu là lá, thêm độ xoay ngẫu nhiên
+            if (!isSnowflake) {
+                const rotation = Math.random() * 360;
+                particle.style.setProperty('--leaf-rotation', `${rotation}deg`);
+                particle.style.animationDuration = `${duration}s, ${Math.random() * 5 + 5}s`; // Thêm animation spin
+            }
 
-            // Xóa bông tuyết sau khi rơi xong để tối ưu hiệu suất
+            particleContainer.appendChild(particle);
+
+            // Xóa hạt sau khi rơi xong để tối ưu hiệu suất
             setTimeout(() => {
-                snowflake.remove();
+                particle.remove();
             }, duration * 1000);
         }
 
-        // Tạo bông tuyết mới liên tục
-        // Điều chỉnh tần suất tạo bông tuyết để có mật độ phù hợp
-        setInterval(createSnowflake, 150); // Tăng mật độ bông tuyết (mỗi 150ms)
+        // Tạo hạt mới liên tục (tuyết và lá)
+        setInterval(createParticle, 100); // Tăng mật độ hạt (mỗi 100ms)
     </script>
 </body>
 </html>
