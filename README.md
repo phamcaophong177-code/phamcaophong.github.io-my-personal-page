@@ -31,7 +31,7 @@
             transition: background-color 0.5s ease; /* Hiệu ứng chuyển đổi mượt mà */
         }
 
-        /* Vùng chứa bông tuyết và lá (luôn hoạt động mạnh) */
+        /* Vùng chứa bông tuyết và lá */
         #particle-container {
             position: fixed;
             top: 0;
@@ -41,8 +41,8 @@
             pointer-events: none; /* Không cho phép tương tác với chuột */
             z-index: 5; /* Nằm trên lớp phủ nền nhưng dưới nội dung chính */
             overflow: hidden; /* Quan trọng: Ẩn thanh cuộn của riêng container */
-            opacity: 1; /* Luôn rõ */
-            backdrop-filter: blur(50px); /* Luôn mờ CỰC MẠNH để tạo hiệu ứng bão tuyết */
+            opacity: 1; /* Mặc định: rõ (cho hiệu ứng bão tuyết) */
+            backdrop-filter: blur(50px); /* Mặc định: mờ CỰC MẠNH để tạo hiệu ứng bão tuyết */
             transition: opacity 0.5s ease, backdrop-filter 0.5s ease; /* Chuyển đổi mượt mà */
         }
 
