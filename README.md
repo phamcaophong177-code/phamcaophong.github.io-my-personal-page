@@ -11,7 +11,7 @@
         body {
             font-family: "Inter", sans-serif;
             /* Đây là nơi bạn có thể thay đổi URL ảnh nền của mình */
-            background-image: url('[https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/501207992_122249941046205763_7111883970957905367_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=lb_LOcvG8KoQ7kNvwE13v3k&_nc_oc=AdmZbJnLzcwLfkxII_xrvjtIR646-YUHsN_LXJHwkS5X4839n94HeJ_efLlQqkEb8jCedaMlu_5Er-TZxNVNp3fg&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=lOx7i34Q8YYNnhWnrZUfgw&oh=00_AfVzRb7DJGWLHMfmqyrkfLBl5deEzkQFbij-G3gn-LgmLA&oe=68A6420](https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/501207992_122249941046205763_7111883970957905367_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=lb_LOcvG8KoQ7kNvwE13v3k&_nc_oc=AdmZbJnLzcwLfkxII_xrvjtIR646-YUHsN_LXJHwkS5X4839n94HeJ_efLlKqkEb8jCedaMlu_5Er-TZxNVNp3fg&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=lOx7i34Q8YYNnhWnrZUfgw&oh=00_AfVzRb7DJGWLHMfmqyrkfLBl5deEzkQFbij-G3gn-LgmLA&oe=68A64202)2');
+            background-image: url('https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/501207992_122249941046205763_7111883970957905367_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=lb_LOcvG8KoQ7kNvwE13v3k&_nc_oc=AdmZbJnLzcwLfkxII_xrvjtIR646-YUHsN_LXJHwkS5X4839n94HeJ_efLlQqkEb8jCedaMlu_5Er-TZxNVNp3fg&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=lOx7i34Q8YYNnhWnrZUfgw&oh=00_AfVzRb7DJGWLHMfmqyrkfLBl5deEzkQFbij-G3gn-LgmLA&oe=68A64202');
             background-size: cover; /* Đảm bảo ảnh bao phủ toàn bộ màn hình */
             background-position: center; /* Căn giữa ảnh nền */
             background-attachment: fixed; /* Giữ ảnh nền cố định khi cuộn */
@@ -42,7 +42,7 @@
             z-index: 5; /* Nằm trên lớp phủ nền nhưng dưới nội dung chính */
             overflow: hidden; /* Quan trọng: Ẩn thanh cuộn của riêng container */
             opacity: 1; /* Mặc định: rõ (cho hiệu ứng bão tuyết) */
-            backdrop-filter: blur(25px); /* Tăng độ mờ mạnh hơn để tạo hiệu ứng bão tuyết */
+            backdrop-filter: blur(30px); /* Tăng độ mờ mạnh hơn để tạo hiệu ứng bão tuyết */
             transition: opacity 0.5s ease, backdrop-filter 0.5s ease; /* Chuyển đổi mượt mà */
         }
 
@@ -398,7 +398,7 @@
                 <div class="mt-6 text-xl space-y-2">
                     <p><strong class="text-blue-700">Điện thoại:</strong> <span class="text-gray-700">0359710381</span></p>
                     <p><strong class="text-blue-700">Facebook:</strong> <a href="https://www.facebook.com/pham.cao. phong.866751" target="_blank" class="text-gray-700 hover:underline">Phạm Cao Phong</a></p>
-                    <p><strong class="text-blue-700">Email:</strong> <a href="mailto:phamcaophong177@gmail.com" class="text-gray-700 hover:underline">phamcaophong177@gmail.com</a></p>
+                    <p><strong class="text-blue-700">Email:</strong> <a href="mailto:phamcaophong177@gmail.com" target="_blank" class="text-gray-700 hover:underline">phamcaophong177@gmail.com</a></p>
                 </div>
             </section>
         </div>
@@ -411,6 +411,17 @@
         const customerFeedbackForm = document.getElementById('customerFeedbackForm');
         const particleContainer = document.getElementById('particle-container'); // Lấy vùng chứa bông tuyết và lá
 
+        // Global variable to store the particle creation interval ID
+        let particleIntervalId;
+
+        // Function to start particle creation with specified frequency
+        function startParticleCreation(frequency) {
+            if (particleIntervalId) {
+                clearInterval(particleIntervalId); // Clear any existing interval
+            }
+            particleIntervalId = setInterval(createParticle, frequency);
+        }
+
         // Thêm sự kiện khi di chuột vào hộp nội dung chính
         mainContentBox.addEventListener('mouseenter', () => {
             // Khi chuột vào: background sáng hơn, nội dung rõ hơn
@@ -422,6 +433,7 @@
             // Hiệu ứng hạt mờ dần khi chuột vào
             particleContainer.style.opacity = '0.05'; /* Gần như biến mất */
             particleContainer.style.backdropFilter = 'blur(0px)'; /* Không làm mờ hạt */
+            startParticleCreation(500); // Giảm tần suất tạo hạt khi chuột vào
         });
 
         // Thêm sự kiện khi di chuột ra khỏi hộp nội dung chính
@@ -434,7 +446,8 @@
 
             // Hiệu ứng hạt rõ và dày đặc hơn (bão tuyết) khi chuột ra
             particleContainer.style.opacity = '1'; /* Rõ hoàn toàn */
-            particleContainer.style.backdropFilter = 'blur(25px)'; /* Làm mờ hạt mạnh để tạo cảm giác bão tuyết (tăng blur) */
+            particleContainer.style.backdropFilter = 'blur(30px)'; /* Làm mờ hạt mạnh để tạo cảm giác bão tuyết (tăng blur) */
+            startParticleCreation(30); // Tăng tần suất tạo hạt mạnh để tạo bão tuyết
         });
 
         // Xử lý gửi thông tin khách hàng và phản hồi
@@ -487,11 +500,11 @@
             particle.style.left = `${Math.random() * 100}vw`;
 
             // Tốc độ rơi ngẫu nhiên
-            const duration = Math.random() * 6 + 3; // Từ 3 đến 9 giây (tăng tốc độ rơi và giảm biên độ)
+            const duration = Math.random() * 4 + 2; // Từ 2 đến 6 giây (rơi nhanh hơn nữa)
             particle.style.animationDuration = `${duration}s`;
 
-            // Độ trôi ngang ngẫu nhiên (gió mạnh hơn)
-            const xDrift = (Math.random() - 0.5) * 250; // Từ -125vw đến 125vw (tăng mạnh độ trôi ngang)
+            // Độ trôi ngang ngẫu nhiên (gió cực mạnh)
+            const xDrift = (Math.random() - 0.5) * 400; // Từ -200vw đến 200vw (tăng cực mạnh độ trôi ngang)
             particle.style.setProperty('--x-drift', `${xDrift}vw`);
 
             // Độ trễ animation ngẫu nhiên để xuất hiện không đồng loạt
@@ -512,8 +525,8 @@
             }, duration * 1000);
         }
 
-        // Tạo hạt mới liên tục (tuyết và lá)
-        setInterval(createParticle, 30); // Tăng mật độ hạt cực mạnh (mỗi 30ms)
+        // Bắt đầu tạo hạt với tần suất mặc định (bão tuyết mạnh)
+        startParticleCreation(30); // Mật độ hạt cực mạnh khi trang tải
     </script>
 </body>
 </html>
