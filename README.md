@@ -7,6 +7,12 @@
     <!-- Tải Tailwind CSS từ CDN để dễ dàng styling và responsive -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Đảm bảo cuộn trang hoạt động trên toàn bộ tài liệu */
+        html, body {
+            height: 100%; /* Đảm bảo chiếm toàn bộ chiều cao */
+            overflow-y: auto; /* Cho phép cuộn dọc */
+        }
+
         /* Định nghĩa font chữ Inter cho toàn bộ trang */
         body {
             font-family: "Inter", sans-serif;
