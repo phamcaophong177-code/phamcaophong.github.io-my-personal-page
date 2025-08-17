@@ -7,22 +7,29 @@
     <!-- Tải Tailwind CSS từ CDN để dễ dàng styling và responsive -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Đảm bảo cuộn trang hoạt động trên toàn bộ tài liệu */
+        html, body {
+            height: 100%; /* Đảm bảo chiếm toàn bộ chiều cao */
+            overflow-y: auto; /* Cho phép cuộn dọc */
+        }
+
         /* Định nghĩa font chữ Inter cho toàn bộ trang */
         body {
             font-family: "Inter", sans-serif;
-            /* Đây là nơi bạn có thể thay đổi URL ảnh nền của mình */
-            background-image: url('https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/501207992_122249941046205763_7111883970957905367_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=lb_LOcvG8KoQ7kNvwE13v3k&_nc_oc=AdmZbJnLzcwLfkxII_xrvjtIR646-YUHsN_LXJHwkS5X4839n94HeJ_efLlKqkEb8jCedaMlu_5Er-TZxNVNp3fg&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=ZXsh4lx1UGGLzFl0KsiqcA&oh=00_AfWS8_39Ix8IRFplUiPX9haaPZ7SbRHvUIztXVLqVN9VHA&oe=68A64202');
+            /* Ảnh nền tổng thể của trang: Đã thay đổi theo yêu cầu của bạn */
+            /* LƯU Ý: URL từ Facebook CDN có thể không ổn định hoặc bị chặn truy cập từ bên ngoài. */
+            /* Để đảm bảo ảnh luôn hiển thị, bạn nên tải ảnh lên dịch vụ lưu trữ ảnh công khai (Imgur, Cloudinary,...) */
+            background-image: url('https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/501207992_122249941046205763_7111883970957905367_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=lb_LOcvG8KoQ7kNvwE13v3k&_nc_oc=AdmZbJnLzcwLfkxII_xrvjtIR646-YUHsN_LXJHwkS5X4839n94HeJ_efLlQqkEb8jCedaMlu_5Er-TZxNVNp3fg&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=lOx7i34Q8YYNnhWnrZUfgw&oh=00_AfVzRb7DJGWLHMfmqyrkfLBl5deEzkQFbij-G3gn-LgmLA&oe=68A64202');
             background-size: cover; /* Đảm bảo ảnh bao phủ toàn bộ màn hình */
             background-position: center; /* Căn giữa ảnh nền */
             background-attachment: fixed; /* Giữ ảnh nền cố định khi cuộn */
             margin: 0;
-            /* Đã loại bỏ: overflow: hidden; để cho phép cuộn trang */
         }
 
         /* Lớp phủ (overlay) điều khiển độ đậm của background */
         #background-overlay {
-            position: fixed; /* Giữ lớp phủ cố định trên màn hình */
-            top: 0; 
+            position: fixed;
+            top: 0;
             left: 0;
             width: 100%;
             height: 100%;
@@ -31,10 +38,25 @@
             transition: background-color 0.5s ease; /* Hiệu ứng chuyển đổi mượt mà */
         }
 
+        /* Vùng chứa hạt (tuyết/mưa) */
+        #particle-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Không cho phép tương tác với chuột */
+            z-index: 5; /* Nằm trên lớp phủ nền nhưng dưới nội dung chính */
+            overflow: hidden; /* Quan trọng: Ẩn thanh cuộn của riêng container hạt */
+            opacity: 1; /* Mặc định: rõ (chế độ mưa) */
+            backdrop-filter: blur(0px); /* Mặc định: không làm mờ (chế độ mưa) */
+            transition: opacity 0.5s ease, backdrop-filter 0.5s ease; /* Chuyển đổi mượt mà */
+        }
+
         /* Vùng bọc nội dung chính, đảm bảo nội dung nằm trên lớp phủ và được căn giữa */
         .content-wrapper {
             position: relative;
-            z-index: 1; /* Nằm trên lớp phủ */
+            z-index: 10; /* Nằm trên lớp phủ và các hạt */
             display: flex;
             flex-direction: column; /* Cho phép các phần tử con xếp dọc */
             justify-content: center; /* Căn giữa theo chiều ngang */
@@ -45,7 +67,15 @@
 
         /* Hộp nội dung chính (phần trắng) */
         #main-content-box {
-            /* Mặc định: rất trong suốt và mờ như sương mù */
+            /* Ảnh nền của khung nội dung chính: Đã thay đổi sang ảnh đại diện của bạn */
+            /* LƯU Ý: URL từ Facebook CDN có thể không ổn định hoặc bị chặn truy cập từ bên ngoài. */
+            /* Để đảm bảo ảnh luôn hiển thị, bạn nên tải ảnh lên dịch vụ lưu trữ ảnh công khai (Imgur, Cloudinary,...) */
+            background-image: url('https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/501207992_122249941046205763_7111883970957905367_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=lb_LOcvG8KoQ7kNvwE13v3k&_nc_oc=AdmZbJnLzcwLfkxII_xrvjtIR646-YUHsN_LXJHwkS5X4839n94HeJ_efLlQqkEb8jCedaMlu_5Er-TZxNVNp3fg&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=lOx7i34Q8YYNnhWnrZUfgw&oh=00_AfVzRb7DJGWLHMfmqyrkfLBl5deEzkQFbij-G3gn-LgmLA&oe=68A64202');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* Mặc định (chuột ra ngoài): mờ tan như sương mù */
             background-color: rgba(255, 255, 255, 0.05); /* Rất trong suốt (5% độ mờ) */
             backdrop-filter: blur(20px); /* Làm mờ mạnh hơn để tạo hiệu ứng sương mù */
             border: 1px solid rgba(255, 255, 255, 0.1); /* Đường viền mỏng, trong suốt */
@@ -76,7 +106,6 @@
             align-items: center;
             justify-content: center;
             background-color: rgba(255, 255, 255, 0.1); /* Nền nhẹ cho phần wave, sẽ bị lớp cha (main-content-box) làm mờ */
-            /* backdrop-filter: blur(5px); */ /* Có thể thêm nếu muốn thêm mờ cho riêng phần này */
         }
 
         .wave-background {
@@ -129,10 +158,91 @@
             0% { background-position-x: 0; }
             100% { background-position-x: 1440px; } /* Đảm bảo vòng lặp liên tục */
         }
+
+        /* CSS cho hệ thống đánh giá sao */
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse; /* Đảo ngược thứ tự để sao 5 ở bên phải */
+            justify-content: center;
+            gap: 0.25rem; /* Khoảng cách giữa các sao */
+        }
+
+        .star-rating input[type="radio"] {
+            display: none; /* Ẩn radio button gốc */
+        }
+
+        .star-rating label {
+            cursor: pointer;
+            font-size: 2.5rem; /* Kích thước sao */
+            color: #ccc; /* Màu sao mặc định (chưa chọn) */
+            transition: color 0.2s ease-in-out;
+            /* SVG icon for star */
+            width: 2.5rem; /* Đảm bảo kích thước SVG khớp với font-size */
+            height: 2.5rem;
+        }
+
+        .star-rating svg {
+            fill: currentColor; /* Dùng màu từ parent (label) */
+            stroke: currentColor; /* Dùng màu từ parent (label) */
+            stroke-width: 0; /* Không có viền */
+        }
+
+        /* Màu khi di chuột qua hoặc đã chọn */
+        .star-rating input[type="radio"]:checked ~ label,
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: #ffc107; /* Màu vàng cam khi chọn hoặc hover */
+        }
+
+        /* Màu khi di chuột ra khỏi sao đã chọn (để giữ màu vàng) */
+        .star-rating input[type="radio"]:checked + label:hover,
+        .star-rating input[type="radio"]:checked ~ label:hover,
+        .star-rating input[type="radio"]:checked ~ label:hover ~ label,
+        .star-rating label:hover ~ input[type="radio"]:checked ~ label {
+            color: #ffc107;
+        }
+
+        /* ---- CSS cho hiệu ứng hạt (tuyết/mưa) ---- */
+        .particle {
+            position: absolute;
+            background-color: #fff; /* Màu trắng cho tuyết/mưa */
+            border-radius: 50%; /* Đảm bảo hình tròn */
+            opacity: 0; /* Bắt đầu với độ trong suốt bằng 0 */
+            animation: particle-fall linear infinite;
+        }
+
+        .particle.snowflake {
+            /* Bông tuyết tròn nhỏ */
+            background-image: none; /* Loại bỏ SVG */
+            border-radius: 50%; /* Đảm bảo hình tròn */
+        }
+
+        .particle.raindrop {
+            background-color: rgba(173, 216, 230, 0.8); /* Màu xanh nhạt của mưa */
+            border-radius: 50%;
+        }
+
+        @keyframes particle-fall {
+            0% {
+                transform: translateY(-10vh) translateX(0); /* Bắt đầu từ trên cao */
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8; /* Hiện rõ dần */
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh) translateX(var(--x-drift)); /* Rơi xuống và trôi ngang */
+                opacity: 0; /* Biến mất khi chạm đáy */
+            }
+        }
     </style>
 </head>
 <body>
     <div id="background-overlay"></div> <!-- Lớp phủ nền động -->
+    <div id="particle-container"></div> <!-- Vùng chứa hạt -->
 
     <div class="content-wrapper">
         <div id="main-content-box" class="rounded-xl shadow-lg p-8 md:p-12 max-w-4xl w-full mx-auto">
@@ -217,12 +327,15 @@
                 </div>
             </section>
 
-            <!-- Phần Thông tin liên hệ khách hàng -->
+            <!-- Phần Thông tin liên hệ và phản hồi khách hàng -->
             <section class="mb-10">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2">
-                    Thông Tin Liên Hệ Khách Hàng
+                    Thông Tin Liên Hệ & Phản Hồi Khách Hàng
                 </h2>
-                <form class="space-y-4 text-gray-700">
+                <form id="customerFeedbackForm" class="space-y-4 text-gray-700">
+                    <p class="text-center text-lg font-semibold text-gray-800">
+                        Vui lòng để lại thông tin và đánh giá của bạn:
+                    </p>
                     <div>
                         <label for="clientName" class="block text-lg font-semibold mb-1">Họ và tên:</label>
                         <input type="text" id="clientName" name="clientName" placeholder="Nhập họ và tên của bạn" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white bg-opacity-70" required>
@@ -242,17 +355,42 @@
                                 <option value="">Chọn giới tính</option>
                                 <option value="nam">Nam</option>
                                 <option value="nu">Nữ</option>
-                                <option value="khac">Khác</option>
+                                <option value="khac">Khac</option>
                             </select>
                         </div>
                     </div>
+
+                    <div class="text-center pt-4 border-t border-gray-300">
+                        <label class="block text-lg font-semibold mb-2">Đánh giá của bạn:</label>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5" required><label for="star5" title="5 sao">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63L2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            </label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4" title="4 sao">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63L2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            </label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3" title="3 sao">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63L2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            </label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2" title="2 sao">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63L2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            </label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1" title="1 sao">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63L2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="feedbackMessage" class="block text-lg font-semibold mb-1">Phản hồi của bạn:</label>
+                        <textarea id="feedbackMessage" name="feedbackMessage" rows="5" placeholder="Nhập phản hồi của bạn về trang web..." class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white bg-opacity-70" required></textarea>
+                    </div>
                     <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-md hover:bg-blue-700 transition duration-300">
-                        Gửi Thông Tin
+                        Gửi Phản Hồi
                     </button>
                 </form>
             </section>
 
-            <!-- Phần Liên hệ cá nhân -->
+            <!-- Phần Liên hệ cá nhân (giữ nguyên) -->
             <section class="text-center">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2 inline-block">
                     Liên Hệ Cá Nhân
@@ -263,7 +401,7 @@
                 <div class="mt-6 text-xl space-y-2">
                     <p><strong class="text-blue-700">Điện thoại:</strong> <span class="text-gray-700">0359710381</span></p>
                     <p><strong class="text-blue-700">Facebook:</strong> <a href="https://www.facebook.com/pham.cao. phong.866751" target="_blank" class="text-gray-700 hover:underline">Phạm Cao Phong</a></p>
-                    <p><strong class="text-blue-700">Email:</strong> <a href="mailto:phamcaophong177@gmail.com" class="text-gray-700 hover:underline">phamcaophong177@gmail.com</a></p>
+                    <p><strong class="text-blue-700">Email:</strong> <a href="mailto:phamcaophong177@gmail.com" target="_blank" class="text-gray-700 hover:underline">phamcaophong177@gmail.com</a></p>
                 </div>
             </section>
         </div>
@@ -273,25 +411,121 @@
         // Lấy tham chiếu đến các phần tử cần tương tác
         const mainContentBox = document.getElementById('main-content-box');
         const backgroundOverlay = document.getElementById('background-overlay');
+        const customerFeedbackForm = document.getElementById('customerFeedbackForm');
+        const particleContainer = document.getElementById('particle-container'); // Lấy vùng chứa hạt
+
+        // Global variable to store the particle creation interval ID
+        let particleIntervalId;
+        let currentParticleType = 'rain'; // Mặc định là mưa khi trang tải
+
+        // Function to start particle creation with specified frequency
+        function startParticleCreation(frequency) {
+            if (particleIntervalId) {
+                clearInterval(particleIntervalId); // Clear any existing interval
+            }
+            // Xóa tất cả các hạt hiện có trước khi tạo loại mới
+            while (particleContainer.firstChild) {
+                particleContainer.removeChild(particleContainer.firstChild);
+            }
+            particleIntervalId = setInterval(createParticle, frequency);
+        }
 
         // Thêm sự kiện khi di chuột vào hộp nội dung chính
         mainContentBox.addEventListener('mouseenter', () => {
-            // Khi chuột vào: background sáng hơn, nội dung rõ hơn
-            backgroundOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.3)'; /* Nền ít đậm hơn */
-            // Điều chỉnh để rõ ràng hơn rất nhiều (mờ đục hoàn toàn)
-            mainContentBox.style.backgroundColor = 'rgba(255, 255, 255, 1)'; /* Hoàn toàn mờ đục */
-            mainContentBox.style.backdropFilter = 'blur(0px)'; /* Không làm mờ */
-            mainContentBox.style.borderColor = 'rgba(255, 255, 255, 1)'; /* Viền rõ ràng hơn */
+            // Khi chuột vào: background overlay đậm lên, nội dung rõ hơn
+            backgroundOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+            mainContentBox.style.backgroundColor = 'rgba(255, 255, 255, 1)';
+            mainContentBox.style.backdropFilter = 'blur(0px)';
+            mainContentBox.style.borderColor = 'rgba(255, 255, 255, 1)';
+            
+            // Chuyển sang chế độ tuyết lãng mạn
+            currentParticleType = 'snow';
+            particleContainer.style.opacity = '0.3'; /* Mờ đi nhiều nhưng vẫn thấy được */
+            particleContainer.style.backdropFilter = 'blur(5px)'; /* Mờ nhẹ để tạo sương mù */
+            startParticleCreation(150); // Giảm tần suất tạo hạt (tuyết lãng mạn)
         });
 
         // Thêm sự kiện khi di chuột ra khỏi hộp nội dung chính
         mainContentBox.addEventListener('mouseleave', () => {
-            // Khi chuột ra: background đậm lên, nội dung mờ tan như sương mù
-            backgroundOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)'; /* Nền đậm hơn */
-            mainContentBox.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'; /* Mờ tan (5% mờ) */
-            mainContentBox.style.backdropFilter = 'blur(20px)'; /* Mờ mạnh hơn để tạo sương mù */
-            mainContentBox.style.borderColor = 'rgba(255, 255, 255, 0.1)'; /* Viền mờ hơn */
+            // Khi chuột ra: background overlay trở lại mặc định, nội dung mờ tan như sương mù
+            backgroundOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+            mainContentBox.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+            mainContentBox.style.backdropFilter = 'blur(20px)';
+            mainContentBox.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+            // Chuyển sang chế độ mưa rơi
+            currentParticleType = 'rain';
+            particleContainer.style.opacity = '1'; /* Rõ hoàn toàn */
+            particleContainer.style.backdropFilter = 'blur(0px)'; /* Không làm mờ hạt mưa */
+            startParticleCreation(5); // Tăng tần suất tạo hạt CỰC MẠNH (mưa)
         });
+
+        // Xử lý gửi thông tin khách hàng và phản hồi
+        customerFeedbackForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const clientName = document.getElementById('clientName').value;
+            const clientPhone = document.getElementById('clientPhone').value;
+            const clientAge = document.getElementById('clientAge').value;
+            const clientGender = document.getElementById('clientGender').value;
+
+            const rating = document.querySelector('input[name="rating"]:checked');
+            const feedbackMessage = document.getElementById('feedbackMessage').value;
+
+            let subject = `Phản hồi từ khách hàng: ${clientName} - ${clientPhone}`;
+            let body = `THÔNG TIN KHÁCH HÀNG:\n`;
+            body += `Họ và tên: ${clientName}\n`;
+            body += `Số điện thoại: ${clientPhone}\n`;
+            body += `Tuổi: ${clientAge || 'Không cung cấp'}\n`;
+            body += `Giới tính: ${clientGender || 'Không cung cấp'}\n\n`;
+
+            body += `PHẢN HỒI & ĐÁNH GIÁ:\n`;
+            body += `Đánh giá: ${rating ? rating.value + " sao" : "Không đánh giá"}\n`;
+            body += `Nội dung phản hồi:\n${feedbackMessage}`;
+
+            const mailtoLink = `mailto:phamcaophong177@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+            alert('Cảm ơn bạn đã gửi thông tin và phản hồi! Ứng dụng email của bạn sẽ mở ra để hoàn tất việc gửi.');
+        });
+
+        // ---- JavaScript cho hiệu ứng hạt (tuyết/mưa) ----
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            let size, duration, xDrift;
+
+            if (currentParticleType === 'rain') {
+                // Chế độ MƯA RƠI (khi chuột ở ngoài)
+                particle.classList.add('raindrop');
+                size = Math.random() * 2 + 1; // Hạt mưa nhỏ: 1-3px
+                duration = Math.random() * 0.8 + 0.2; // Từ 0.2 đến 1 giây (rơi CỰC KỲ NHANH)
+                xDrift = (Math.random() - 0.5) * 100; // Từ -50vw đến 50vw (trôi ngang vừa phải)
+            } else {
+                // Chế độ TUYẾT LÃNG MẠN (khi chuột vào)
+                particle.classList.add('snowflake');
+                size = Math.random() * 3 + 1; // Tuyết nhỏ: 1-4px
+                duration = Math.random() * 8 + 4; // Từ 4 đến 12 giây (rơi từ từ)
+                xDrift = (Math.random() - 0.5) * 50; // Từ -25vw đến 25vw (trôi ngang nhẹ nhàng)
+            }
+
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 100}vw`;
+            particle.style.animationDuration = `${duration}s`;
+            particle.style.setProperty('--x-drift', `${xDrift}vw`);
+            particle.style.animationDelay = `-${Math.random() * duration}s`; // Độ trễ animation ngẫu nhiên
+
+            particleContainer.appendChild(particle);
+
+            // Xóa hạt sau khi rơi xong để tối ưu hiệu suất
+            setTimeout(() => {
+                particle.remove();
+            }, duration * 1000);
+        }
+
+        // Bắt đầu tạo hạt với tần suất mặc định (chế độ mưa rơi)
+        startParticleCreation(5); // Mật độ hạt CỰC KỲ MẠNH khi trang tải (5ms)
     </script>
 </body>
 </html>
