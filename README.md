@@ -42,7 +42,7 @@
             z-index: 5; /* Nằm trên lớp phủ nền nhưng dưới nội dung chính */
             overflow: hidden; /* Quan trọng: Ẩn thanh cuộn của riêng container */
             opacity: 1; /* Mặc định: rõ (cho hiệu ứng bão tuyết) */
-            backdrop-filter: blur(15px); /* Mặc định: mờ mạnh để tạo hiệu ứng bão tuyết */
+            backdrop-filter: blur(25px); /* Tăng độ mờ mạnh hơn để tạo hiệu ứng bão tuyết */
             transition: opacity 0.5s ease, backdrop-filter 0.5s ease; /* Chuyển đổi mượt mà */
         }
 
@@ -434,7 +434,7 @@
 
             // Hiệu ứng hạt rõ và dày đặc hơn (bão tuyết) khi chuột ra
             particleContainer.style.opacity = '1'; /* Rõ hoàn toàn */
-            particleContainer.style.backdropFilter = 'blur(15px)'; /* Làm mờ hạt mạnh để tạo cảm giác bão tuyết */
+            particleContainer.style.backdropFilter = 'blur(25px)'; /* Làm mờ hạt mạnh để tạo cảm giác bão tuyết (tăng blur) */
         });
 
         // Xử lý gửi thông tin khách hàng và phản hồi
@@ -479,7 +479,7 @@
             }
 
             // Kích thước ngẫu nhiên
-            const size = isSnowflake ? Math.random() * 6 + 5 : Math.random() * 10 + 8; // Tuyết 5-11px, Lá 8-18px (tăng mạnh kích thước)
+            const size = isSnowflake ? Math.random() * 8 + 7 : Math.random() * 12 + 10; // Tuyết 7-15px, Lá 10-22px (tăng mạnh kích thước)
             particle.style.width = `${size}px`;
             particle.style.height = `${size}px`;
 
@@ -487,11 +487,11 @@
             particle.style.left = `${Math.random() * 100}vw`;
 
             // Tốc độ rơi ngẫu nhiên
-            const duration = Math.random() * 8 + 4; // Từ 4 đến 12 giây (tăng tốc độ rơi)
+            const duration = Math.random() * 6 + 3; // Từ 3 đến 9 giây (tăng tốc độ rơi và giảm biên độ)
             particle.style.animationDuration = `${duration}s`;
 
-            // Độ trôi ngang ngẫu nhiên
-            const xDrift = (Math.random() - 0.5) * 150; // Từ -75vw đến 75vw (tăng độ trôi ngang)
+            // Độ trôi ngang ngẫu nhiên (gió mạnh hơn)
+            const xDrift = (Math.random() - 0.5) * 250; // Từ -125vw đến 125vw (tăng mạnh độ trôi ngang)
             particle.style.setProperty('--x-drift', `${xDrift}vw`);
 
             // Độ trễ animation ngẫu nhiên để xuất hiện không đồng loạt
@@ -513,7 +513,7 @@
         }
 
         // Tạo hạt mới liên tục (tuyết và lá)
-        setInterval(createParticle, 50); // Tăng mật độ hạt cực mạnh (mỗi 50ms)
+        setInterval(createParticle, 30); // Tăng mật độ hạt cực mạnh (mỗi 30ms)
     </script>
 </body>
 </html>
