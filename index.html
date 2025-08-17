@@ -10,18 +10,18 @@
         /* Định nghĩa font chữ Inter cho toàn bộ trang */
         body {
             font-family: "Inter", sans-serif;
-            /* Đây là nơi bạn có thể thay đổi URL ảnh nền của mình */
-            background-image: url('https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/501207992_122249941046205763_7111883970957905367_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=lb_LOcvG8KoQ7kNvwE13v3k&_nc_oc=AdmZbJnLzcwLfkxII_xrvjtIR646-YUHsN_LXJHwkS5X4839n94HeJ_efLlQqkEb8jCedaMlu_5Er-TZxNVNp3fg&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=lOx7i34Q8YYNnhWnrZUfgw&oh=00_AfVzRb7DJGWLHMfmqyrkfLBl5deEzkQFbij-G3gn-LgmLA&oe=68A64202');
+            /* Ảnh nền tổng thể của trang: Bão tuyết */
+            background-image: url('https://images.unsplash.com/photo-1542612493-0105373a7266?q=80&w=2670&auto=format&fit=crop'); /* Ảnh nền tuyết rơi từ Unsplash */
             background-size: cover; /* Đảm bảo ảnh bao phủ toàn bộ màn hình */
             background-position: center; /* Căn giữa ảnh nền */
             background-attachment: fixed; /* Giữ ảnh nền cố định khi cuộn */
             margin: 0;
-            /* Đã loại bỏ: overflow: hidden; để cho phép cuộn trang */
+            overflow: hidden; /* Ẩn thanh cuộn của body để hiệu ứng tuyết không bị cắt */
         }
 
         /* Lớp phủ (overlay) điều khiển độ đậm của background */
         #background-overlay {
-            position: fixed; /* Giữ lớp phủ cố định trên màn hình */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -31,7 +31,7 @@
             transition: background-color 0.5s ease; /* Hiệu ứng chuyển đổi mượt mà */
         }
 
-        /* Vùng chứa bông tuyết và lá */
+        /* Vùng chứa bông tuyết và lá (luôn hoạt động mạnh) */
         #particle-container {
             position: fixed;
             top: 0;
@@ -41,8 +41,8 @@
             pointer-events: none; /* Không cho phép tương tác với chuột */
             z-index: 5; /* Nằm trên lớp phủ nền nhưng dưới nội dung chính */
             overflow: hidden; /* Quan trọng: Ẩn thanh cuộn của riêng container */
-            opacity: 1; /* Mặc định: rõ (cho hiệu ứng bão tuyết) */
-            backdrop-filter: blur(15px); /* Mặc định: mờ mạnh để tạo hiệu ứng bão tuyết */
+            opacity: 1; /* Luôn rõ */
+            backdrop-filter: blur(50px); /* Luôn mờ CỰC MẠNH để tạo hiệu ứng bão tuyết */
             transition: opacity 0.5s ease, backdrop-filter 0.5s ease; /* Chuyển đổi mượt mà */
         }
 
@@ -60,7 +60,13 @@
 
         /* Hộp nội dung chính (phần trắng) */
         #main-content-box {
-            /* Mặc định: rất trong suốt và mờ như sương mù */
+            /* Ảnh nền của khung nội dung chính: Đã thay đổi sang ảnh đại diện của bạn */
+            background-image: url('https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/501207992_122249941046205763_7111883970957905367_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=lb_LOcvG8KoQ7kNvwE13v3k&_nc_oc=AdmZbJnLzcwLfkxII_xrvjtIR646-YUHsN_LXJHwkS5X4839n94HeJ_efLlQqkEb8jCedaMlu_5Er-TZxNVNp3fg&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=lOx7i34Q8YYNnhWnrZUfgw&oh=00_AfVzRb7DJGWLHMfmqyrkfLBl5deEzkQFbij-G3gn-LgmLA&oe=68A64202');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* Mặc định (chuột ra ngoài): mờ tan như sương mù */
             background-color: rgba(255, 255, 255, 0.05); /* Rất trong suốt (5% độ mờ) */
             backdrop-filter: blur(20px); /* Làm mờ mạnh hơn để tạo hiệu ứng sương mù */
             border: 1px solid rgba(255, 255, 255, 0.1); /* Đường viền mỏng, trong suốt */
@@ -352,7 +358,7 @@
                                 <option value="">Chọn giới tính</option>
                                 <option value="nam">Nam</option>
                                 <option value="nu">Nữ</option>
-                                <option value="khac">Khác</option>
+                                <option value="khac">Khac</option>
                             </select>
                         </div>
                     </div>
@@ -398,7 +404,7 @@
                 <div class="mt-6 text-xl space-y-2">
                     <p><strong class="text-blue-700">Điện thoại:</strong> <span class="text-gray-700">0359710381</span></p>
                     <p><strong class="text-blue-700">Facebook:</strong> <a href="https://www.facebook.com/pham.cao. phong.866751" target="_blank" class="text-gray-700 hover:underline">Phạm Cao Phong</a></p>
-                    <p><strong class="text-blue-700">Email:</strong> <a href="mailto:phamcaophong177@gmail.com" class="text-gray-700 hover:underline">phamcaophong177@gmail.com</a></p>
+                    <p><strong class="text-blue-700">Email:</strong> <a href="mailto:phamcaophong177@gmail.com" target="_blank" class="text-gray-700 hover:underline">phamcaophong177@gmail.com</a></p>
                 </div>
             </section>
         </div>
@@ -411,30 +417,43 @@
         const customerFeedbackForm = document.getElementById('customerFeedbackForm');
         const particleContainer = document.getElementById('particle-container'); // Lấy vùng chứa bông tuyết và lá
 
+        // Global variable to store the particle creation interval ID
+        let particleIntervalId;
+
+        // Function to start particle creation with specified frequency
+        function startParticleCreation(frequency) {
+            if (particleIntervalId) {
+                clearInterval(particleIntervalId); // Clear any existing interval
+            }
+            particleIntervalId = setInterval(createParticle, frequency);
+        }
+
         // Thêm sự kiện khi di chuột vào hộp nội dung chính
         mainContentBox.addEventListener('mouseenter', () => {
-            // Khi chuột vào: background sáng hơn, nội dung rõ hơn
-            backgroundOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.3)';
-            mainContentBox.style.backgroundColor = 'rgba(255, 255, 255, 1)';
-            mainContentBox.style.backdropFilter = 'blur(0px)';
-            mainContentBox.style.borderColor = 'rgba(255, 255, 255, 1)';
+            // Khi chuột vào: background overlay đậm lên, nội dung rõ hơn
+            backgroundOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.9)'; /* Đậm hơn nhiều */
+            mainContentBox.style.backgroundColor = 'rgba(255, 255, 255, 1)'; /* Hoàn toàn mờ đục */
+            mainContentBox.style.backdropFilter = 'blur(0px)'; /* Không làm mờ */
+            mainContentBox.style.borderColor = 'rgba(255, 255, 255, 1)'; /* Viền rõ ràng hơn */
             
             // Hiệu ứng hạt mờ dần khi chuột vào
             particleContainer.style.opacity = '0.05'; /* Gần như biến mất */
             particleContainer.style.backdropFilter = 'blur(0px)'; /* Không làm mờ hạt */
+            startParticleCreation(500); // Giảm tần suất tạo hạt khi chuột vào
         });
 
         // Thêm sự kiện khi di chuột ra khỏi hộp nội dung chính
         mainContentBox.addEventListener('mouseleave', () => {
-            // Khi chuột ra: background đậm lên, nội dung mờ tan như sương mù
+            // Khi chuột ra: background overlay trở lại mặc định, nội dung mờ tan như sương mù
             backgroundOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-            mainContentBox.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
-            mainContentBox.style.backdropFilter = 'blur(20px)';
-            mainContentBox.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            mainContentBox.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'; /* Mờ tan (5% mờ) */
+            mainContentBox.style.backdropFilter = 'blur(20px)'; /* Mờ mạnh hơn để tạo hiệu ứng sương mù */
+            mainContentBox.style.borderColor = 'rgba(255, 255, 255, 0.1)'; /* Viền mờ hơn */
 
             // Hiệu ứng hạt rõ và dày đặc hơn (bão tuyết) khi chuột ra
             particleContainer.style.opacity = '1'; /* Rõ hoàn toàn */
-            particleContainer.style.backdropFilter = 'blur(15px)'; /* Làm mờ hạt mạnh để tạo cảm giác bão tuyết */
+            particleContainer.style.backdropFilter = 'blur(50px)'; /* Làm mờ hạt CỰC MẠNH để tạo cảm giác bão tuyết */
+            startParticleCreation(5); // Tăng tần suất tạo hạt CỰC MẠNH để tạo bão tuyết
         });
 
         // Xử lý gửi thông tin khách hàng và phản hồi
@@ -479,7 +498,7 @@
             }
 
             // Kích thước ngẫu nhiên
-            const size = isSnowflake ? Math.random() * 6 + 5 : Math.random() * 10 + 8; // Tuyết 5-11px, Lá 8-18px (tăng mạnh kích thước)
+            const size = isSnowflake ? Math.random() * 20 + 15 : Math.random() * 25 + 20; // Tuyết 15-35px, Lá 20-45px (tăng kích thước đáng kể)
             particle.style.width = `${size}px`;
             particle.style.height = `${size}px`;
 
@@ -487,11 +506,11 @@
             particle.style.left = `${Math.random() * 100}vw`;
 
             // Tốc độ rơi ngẫu nhiên
-            const duration = Math.random() * 8 + 4; // Từ 4 đến 12 giây (tăng tốc độ rơi)
+            const duration = Math.random() * 1 + 0.2; // Từ 0.2 đến 1.2 giây (rơi CỰC KỲ NHANH)
             particle.style.animationDuration = `${duration}s`;
 
-            // Độ trôi ngang ngẫu nhiên
-            const xDrift = (Math.random() - 0.5) * 150; // Từ -75vw đến 75vw (tăng độ trôi ngang)
+            // Độ trôi ngang ngẫu nhiên (gió CỰC KỲ MẠNH)
+            const xDrift = (Math.random() - 0.5) * 1500; // Từ -750vw đến 750vw (tăng CỰC KỲ MẠNH độ trôi ngang)
             particle.style.setProperty('--x-drift', `${xDrift}vw`);
 
             // Độ trễ animation ngẫu nhiên để xuất hiện không đồng loạt
@@ -501,7 +520,7 @@
             if (!isSnowflake) {
                 const rotation = Math.random() * 360;
                 particle.style.setProperty('--leaf-rotation', `${rotation}deg`);
-                particle.style.animationDuration = `${duration}s, ${Math.random() * 5 + 5}s`; // Thêm animation spin
+                particle.style.animationDuration = `${duration}s, ${Math.random() * 1 + 0.2}s`; // Thêm animation spin nhanh hơn
             }
 
             particleContainer.appendChild(particle);
@@ -512,8 +531,8 @@
             }, duration * 1000);
         }
 
-        // Tạo hạt mới liên tục (tuyết và lá)
-        setInterval(createParticle, 50); // Tăng mật độ hạt cực mạnh (mỗi 50ms)
+        // Bắt đầu tạo hạt với tần suất mặc định (bão tuyết mạnh)
+        startParticleCreation(1); // Mật độ hạt CỰC KỲ MẠNH khi trang tải (1ms)
     </script>
 </body>
 </html>
