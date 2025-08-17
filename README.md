@@ -10,13 +10,13 @@
         /* Định nghĩa font chữ Inter cho toàn bộ trang */
         body {
             font-family: "Inter", sans-serif;
-            /* Ảnh nền tổng thể của trang: Đã thay đổi theo yêu cầu của bạn */
-            background-image: url('https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/501207992_122249941046205763_7111883970957905367_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=lb_LOcvG8KoQ7kNvwE13v3k&_nc_oc=AdmZbJnLzcwLfkxII_xrvjtIR646-YUHsN_LXJHwkS5X4839n94HeJ_efLlQqkEb8jCedaMlu_5Er-TZxNVNp3fg&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=lOx7i34Q8YYNnhWnrZUfgw&oh=00_AfVzRb7DJGWLHMfmqyrkfLBl5deEzkQFbij-G3gn-LgmLA&oe=68A64202');
+            /* Ảnh nền tổng thể của trang: Bão tuyết */
+            background-image: url('https://images.unsplash.com/photo-1542612493-0105373a7266?q=80&w=2670&auto=format&fit=crop'); /* Ảnh nền tuyết rơi từ Unsplash */
             background-size: cover; /* Đảm bảo ảnh bao phủ toàn bộ màn hình */
             background-position: center; /* Căn giữa ảnh nền */
             background-attachment: fixed; /* Giữ ảnh nền cố định khi cuộn */
             margin: 0;
-            /* Đã loại bỏ: overflow: hidden; để cho phép cuộn trang */
+            overflow: hidden; /* Ẩn thanh cuộn của body để hiệu ứng tuyết không bị cắt */
         }
 
         /* Lớp phủ (overlay) điều khiển độ đậm của background */
@@ -430,8 +430,8 @@
 
         // Thêm sự kiện khi di chuột vào hộp nội dung chính
         mainContentBox.addEventListener('mouseenter', () => {
-            // Khi chuột vào: background sáng hơn, nội dung rõ hơn
-            backgroundOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.3)';
+            // Khi chuột vào: background overlay đậm lên, nội dung rõ hơn
+            backgroundOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.9)'; /* Đậm hơn nhiều */
             mainContentBox.style.backgroundColor = 'rgba(255, 255, 255, 1)'; /* Hoàn toàn mờ đục */
             mainContentBox.style.backdropFilter = 'blur(0px)'; /* Không làm mờ */
             mainContentBox.style.borderColor = 'rgba(255, 255, 255, 1)'; /* Viền rõ ràng hơn */
@@ -444,7 +444,7 @@
 
         // Thêm sự kiện khi di chuột ra khỏi hộp nội dung chính
         mainContentBox.addEventListener('mouseleave', () => {
-            // Khi chuột ra: background đậm lên, nội dung mờ tan như sương mù
+            // Khi chuột ra: background overlay trở lại mặc định, nội dung mờ tan như sương mù
             backgroundOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
             mainContentBox.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'; /* Mờ tan (5% mờ) */
             mainContentBox.style.backdropFilter = 'blur(20px)'; /* Mờ mạnh hơn để tạo hiệu ứng sương mù */
