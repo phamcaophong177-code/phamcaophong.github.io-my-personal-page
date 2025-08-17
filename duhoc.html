@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Du Học Tri Thức</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('https://edwisefoundation.com/wp-content/uploads/2023/08/study-abroad.webp') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 50, 0.8);
+      color: white;
+      padding: 15px 0;
+      z-index: 1000;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      position: relative;
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav ul li ul.submenu {
+      display: none;
+      position: absolute;
+      top: 30px;
+      left: 0;
+      background: rgba(0, 0, 70, 0.9);
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    nav ul li:hover ul.submenu {
+      display: block;
+    }
+
+    nav ul li ul.submenu li {
+      margin: 5px 0;
+    }
+
+    section {
+      padding: 100px 20px;
+      text-align: center;
+      min-height: 100vh;
+    }
+
+    section h1, section h2 {
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px black;
+    }
+
+    .overlay {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 40px;
+      border-radius: 12px;
+      display: inline-block;
+    }
+
+    footer {
+      background: rgba(0,0,50,0.8);
+      padding: 30px;
+      text-align: center;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <ul>
+      <li><a href="#trangchu">Trang Chủ</a></li>
+      <li>
+        <a href="hocvan.html">Học Vấn</a>
+        <ul class="submenu">
+          <li><a href="https://www.topuniversities.com/student-info/admissions-advice/us-university-entry-requirements" target="_blank">GPA tối thiểu Mỹ</a></li>
+          <li><a href="https://www.g-studyinjapan.jasso.go.jp" target="_blank">GPA tối thiểu Nhật</a></li>
+          <li><a href="https://studyinkorea.go.kr" target="_blank">GPA tối thiểu Hàn</a></li>
+          <li><a href="https://studyinswitzerland.plus/" target="_blank">GPA tối thiểu Thụy Sĩ</a></li>
+          <li><a href="https://www.ielts.org/" target="_blank">Cách làm nổi bật hồ sơ (IELTS, JLPT...)</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="kinhnghiem.html">Kinh Nghiệm</a>
+        <ul class="submenu">
+          <li><a href="https://www.japan-guide.com/e/e2228.html" target="_blank">Du học Nhật – bắt đầu từ đâu?</a></li>
+          <li><a href="https://studyinkorea.go.kr" target="_blank">Du học Hàn – bắt đầu từ đâu?</a></li>
+          <li><a href="https://educationusa.state.gov/" target="_blank">Du học Mỹ – bắt đầu từ đâu?</a></li>
+          <li><a href="https://studyinswitzerland.plus/" target="_blank">Du học Thụy Sĩ – bắt đầu từ đâu?</a></li>
+          <li><a href="https://vnexpress.net/cuu-du-hoc-sinh-chia-se-kinh-nghiem-4356789.html" target="_blank">Chia sẻ từ cựu du học sinh</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="quocgia.html">Quốc Gia</a>
+        <ul class="submenu">
+          <li><a href="https://www.studyinjapan.go.jp/en/" target="_blank">Chi phí & lương – Nhật Bản</a></li>
+          <li><a href="https://www.studyinkorea.go.kr" target="_blank">Chi phí & lương – Hàn Quốc</a></li>
+          <li><a href="https://educationusa.state.gov/" target="_blank">Chi phí & lương – Mỹ</a></li>
+          <li><a href="https://studyinswitzerland.plus/" target="_blank">Chi phí & lương – Thụy Sĩ</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="reason.html">Vì Sao Du Học</a>
+        <ul class="submenu">
+          <li><a href="https://vnexpress.net/tag/du-hoc-sinh-viet-197687" target="_blank">Du học sinh Việt thành công</a></li>
+          <li><a href="https://forbesvietnam.com.vn/" target="_blank">Cơ hội nghề nghiệp</a></li>
+        </ul>
+      </li>
+      <li><a href="lienhe.html">Liên Hệ</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section id="trangchu">
+  <div class="overlay">
+    <h1>Chào mừng đến với Du Học Tri Thức</h1>
+    <p>"Tri thức là chìa khóa mở ra cánh cửa thế giới"</p>
+  </div>
+</section>
+
+<section id="hocvan" style="background:url('https://media.istockphoto.com/id/484915982/vi/anh/akihabara-tokyo.webp?s=2048x2048&w=is&k=20&c=1BkwsMlwUQrou2O0I3L02RJJX8cLVyxPazAmusAhHB0=') no-repeat center center fixed; background-size:cover;">
+  <div class="overlay">
+    <h2><hocvan class="html"></hocvan></h2>
+    <p>Tìm hiểu GPA tối thiểu và cách làm hồ sơ nổi bật cho từng quốc gia.</p>
+  </div>
+</section>
+
+<section id="kinhnghiem" style="background:url('https://as1.ftcdn.net/v2/jpg/01/68/06/04/1000_F_168060463_75EZgPPmmZNkutXBrz8wh0lzj7b3t7Jq.jpg') no-repeat center center fixed; background-size:cover;">
+  <div class="overlay">
+    <h2>Kinh Nghiệm Du Học</h2>
+    <p>Các bước chuẩn bị, ngôn ngữ, và kinh nghiệm từ cựu du học sinh.</p>
+  </div>
+</section>
+
+<section id="quocgia" style="background:url('https://media.istockphoto.com/id/1454217037/vi/anh/t%C6%B0%E1%BB%A3ng-n%E1%BB%AF-th%E1%BA%A7n-t%E1%BB%B1-do-v%C3%A0-%C4%91%C6%B0%E1%BB%9Dng-ch%C3%A2n-tr%E1%BB%9Di-th%C3%A0nh-ph%E1%BB%91-new-york-v%E1%BB%9Bi-khu-t%C3%A0i-ch%C3%ADnh-manhattan-trung-t%C3%A2m.jpg?s=612x612&w=0&k=20&c=S4eluGOFZJTAyb_Jgim5-nJmkZNMhcy5t4_VOA2kKR0=') no-repeat center center fixed; background-size:cover;">
+  <div class="overlay">
+    <h2>Quốc Gia Du Học</h2>
+    <p>Nhật Bản, Hàn Quốc, Mỹ, Thụy Sĩ – chọn điểm đến phù hợp và tìm hiểu chi phí.</p>
+  </div>
+</section>
+
+<section id="visao" style="background:url('https://img.tripi.vn/cdn-cgi/image/width=700,height=700/https://gcs.tripi.vn/public-tripi/tripi-feed/img/482797vST/anh-mo-ta.png') no-repeat center center fixed; background-size:cover;">
+  <div class="overlay">
+    <h2>Vì Sao Du Học?</h2>
+    <p>Du học sinh Việt Nam đã thành công, cơ hội nghề nghiệp mở rộng.</p>
+  </div>
+</section>
+
+<footer id="lienhe">
+  <h2>Liên Hệ</h2>
+  <p>Người liên hệ: Phong</p>
+  <p>Số điện thoại: 0359710381</p>
+  <p>Email: phong@duhocthuc.vn</p>
+</footer>
+
+</body>
+</html>
