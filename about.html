@@ -4,25 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thông Tin Cá Nhân Của Phạm Cao Phong</title>
-    <!-- Tải Tailwind CSS từ CDN để dễ dàng styling và responsive -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Đảm bảo cuộn trang hoạt động trên toàn bộ tài liệu */
-        html, body {
-            height: 100%; /* Đảm bảo chiếm toàn bộ chiều cao */
-            overflow-y: auto; /* Cho phép cuộn dọc */
-        }
-
         /* Định nghĩa font chữ Inter cho toàn bộ trang */
         body {
             font-family: "Inter", sans-serif;
             /* Ảnh nền tổng thể của trang: Đã thay đổi theo yêu cầu của bạn */
-            background-image: url('https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/501207992_122249941046205763_7111883970957905367_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=lb_LOcvG8KoQ7kNvwE13v3k&_nc_oc=AdmZbJnLzcwLfkxII_xrvjtIR646-YUHsN_LXJHwkS5X4839n94HeJ_efLlQqkEb8jCedaMlu_5Er-TZxNVNp3fg&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=lOx7i34Q8YYNnhWnrZUfgw&oh=00_AfVzRb7DJGWLHMfmqyrkfLBl5deEzkQFbij-G3gn-LgmLA&oe=68A64202');
+            background-image: url('https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/501207992_122249941046205763_7111883970957905367_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=lb_LOcvG8KoQ7kNvwFKrUmo&_nc_oc=AdkXyAwzIPOkAevXwZD-l3oYM1WSfiMMZk_-GNIX-mWuNm2pkNS8eSoOAdabGyw7f1-96ILSvsL5Ogw2HQS-hn0l&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=HucBHFSZwLR_pW2KHk7_0g&oh=00_AfWOSg20ECArxEGYyXrjYR65y_tWeLHPfCBOTGvKQb9YUg&oe=68A75B42');
             background-size: cover; /* Đảm bảo ảnh bao phủ toàn bộ màn hình */
             background-position: center; /* Căn giữa ảnh nền */
             background-attachment: fixed; /* Giữ ảnh nền cố định khi cuộn */
             margin: 0;
-            /* Đã loại bỏ: overflow: hidden; để cho phép cuộn trang */
         }
 
         /* Lớp phủ (overlay) điều khiển độ đậm của background */
@@ -37,7 +29,7 @@
             transition: background-color 0.5s ease; /* Hiệu ứng chuyển đổi mượt mà */
         }
 
-        /* Vùng chứa bông tuyết (đã loại bỏ các hiệu ứng tuyết rơi) */
+        /* Vùng chứa bông tuyết và lá */
         #particle-container {
             position: fixed;
             top: 0;
@@ -46,9 +38,9 @@
             height: 100%;
             pointer-events: none; /* Không cho phép tương tác với chuột */
             z-index: 5; /* Nằm trên lớp phủ nền nhưng dưới nội dung chính */
-            overflow: hidden; /* Quan trọng: Ẩn thanh cuộn của riêng container tuyết */
-            opacity: 0; /* Đã ẩn hoàn toàn */
-            backdrop-filter: blur(0px); /* Không làm mờ */
+            overflow: hidden; /* Quan trọng: Ẩn thanh cuộn của riêng container */
+            opacity: 0.3; /* Mặc định: mờ (lãng mạn) */
+            backdrop-filter: blur(5px); /* Mặc định: mờ nhẹ để tạo hiệu ứng lãng mạn */
             transition: opacity 0.5s ease, backdrop-filter 0.5s ease; /* Chuyển đổi mượt mà */
         }
 
@@ -72,10 +64,9 @@
             background-position: center;
             background-repeat: no-repeat;
             
-            /* Mặc định (chuột ra ngoài): mờ tan như sương mù */
-            background-color: rgba(255, 255, 255, 0.05); /* Rất trong suốt (5% độ mờ) */
-            backdrop-filter: blur(20px); /* Làm mờ mạnh hơn để tạo hiệu ứng sương mù */
-            border: 1px solid rgba(255, 255, 255, 0.1); /* Đường viền mỏng, trong suốt */
+            background-color: rgba(255, 255, 255, 1); /* Hoàn toàn mờ đục */
+            backdrop-filter: blur(0px); /* Không làm mờ */
+            border: 1px solid rgba(255, 255, 255, 1); /* Viền rõ ràng hơn */
             transition: background-color 0.5s ease, backdrop-filter 0.5s ease, border-color 0.5s ease; /* Hiệu ứng chuyển đổi mượt mà */
         }
 
@@ -200,13 +191,34 @@
             color: #ffc107;
         }
 
-        /* ---- CSS cho hiệu ứng hạt tuyết ---- */
+        /* ---- CSS cho hiệu ứng hạt (tuyết/lá) ---- */
         .particle {
             position: absolute;
-            background-color: #fff; /* Màu trắng cho tuyết */
-            border-radius: 50%; /* Hình tròn */
+            background-color: #fff; /* Màu trắng cho tuyết/lá */
+            border-radius: 50%; /* Mặc định hình tròn */
             opacity: 0; /* Bắt đầu với độ trong suốt bằng 0 */
             animation: particle-fall linear infinite;
+        }
+
+        .particle.snowflake {
+            /* Sử dụng SVG cho bông tuyết 5 cánh */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M12 2L9.19 8.63L2 9.24l5.46 4.73L5.82 21l6.18-3.73l6.18 3.73l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 0; /* Bỏ border-radius để hiển thị hình dạng SVG */
+        }
+        .particle.rain {
+            background-color: rgba(173, 216, 230, 0.7); /* Màu xanh nhạt cho mưa */
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* Hình dạng giọt nước */
+            animation: particle-fall-rain linear infinite;
+        }
+        .particle.leaf {
+            /* Tạo hình dạng lá đơn giản bằng CSS */
+            background-color: #f0f8ff; /* Màu xanh nhạt/trắng cho lá tuyết */
+            border-radius: 40% 0 / 50% 50%; /* Hình dạng lá */
+            transform: rotate(var(--leaf-rotation, 0deg)); /* Xoay lá */
+            animation: particle-fall linear infinite, leaf-spin linear infinite;
         }
 
         @keyframes particle-fall {
@@ -215,25 +227,42 @@
                 opacity: 0;
             }
             10% {
-                opacity: 0.8; /* Hiện rõ dần */
+                opacity: 0.8; /* Hiện rõ dần (giảm opacity để tinh tế hơn) */
             }
             90% {
-                opacity: 0.8;
+                opacity: 0.8; /* Giữ rõ */
             }
             100% {
                 transform: translateY(100vh) translateX(var(--x-drift)); /* Rơi xuống và trôi ngang */
                 opacity: 0; /* Biến mất khi chạm đáy */
             }
         }
+        @keyframes particle-fall-rain {
+            0% {
+                transform: translateY(-10vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(100vh) translateX(var(--x-drift));
+                opacity: 0;
+            }
+        }
+
+        @keyframes leaf-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
-    <div id="background-overlay"></div> <!-- Lớp phủ nền động -->
-    <div id="particle-container"></div> <!-- Vùng chứa bông tuyết -->
-
-    <div class="content-wrapper">
+    <div id="background-overlay"></div> <div id="particle-container"></div> <div class="content-wrapper">
         <div id="main-content-box" class="rounded-xl shadow-lg p-8 md:p-12 max-w-4xl w-full mx-auto">
-            <!-- Phần Header - Giới thiệu chung -->
             <header class="text-center mb-10">
                 <h1 class="text-4xl md:text-5xl font-extrabold text-blue-800 mb-2">
                     <span class="text-orange-600">Phạm Cao Phong</span>
@@ -243,7 +272,6 @@
                 </p>
             </header>
 
-            <!-- Phần Thông tin cơ bản -->
             <section class="mb-10">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2">
                     Thông Tin Cơ Bản
@@ -254,7 +282,6 @@
                 </div>
             </section>
 
-            <!-- Phần Giới thiệu bản thân -->
             <section class="mb-10">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2">
                     Về Tôi
@@ -267,7 +294,6 @@
                 </p>
             </section>
 
-            <!-- Phần Kỹ năng -->
             <section class="mb-10">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2">
                     Kỹ Năng
@@ -292,7 +318,6 @@
                 </div>
             </section>
 
-            <!-- Phần Liên hệ tạo web với hiệu ứng sóng biển -->
             <section class="mb-10">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2">
                     Nhu Cầu Tạo Web
@@ -314,7 +339,6 @@
                 </div>
             </section>
 
-            <!-- Phần Thông tin liên hệ và phản hồi khách hàng -->
             <section class="mb-10">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2">
                     Thông Tin Liên Hệ & Phản Hồi Khách Hàng
@@ -377,7 +401,6 @@
                 </form>
             </section>
 
-            <!-- Phần Liên hệ cá nhân (giữ nguyên) -->
             <section class="text-center">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2 inline-block">
                     Liên Hệ Cá Nhân
@@ -399,18 +422,17 @@
         const mainContentBox = document.getElementById('main-content-box');
         const backgroundOverlay = document.getElementById('background-overlay');
         const customerFeedbackForm = document.getElementById('customerFeedbackForm');
-        const particleContainer = document.getElementById('particle-container'); // Lấy vùng chứa bông tuyết
+        const particleContainer = document.getElementById('particle-container'); // Lấy vùng chứa bông tuyết và lá
 
-        // Global variable to store the particle creation interval ID
         let particleIntervalId;
-        let isBlizzardMode = true; // Mặc định là chế độ bão tuyết khi trang tải
+        let isRomanticMode = true; // Mặc định là chế độ lãng mạn khi tải trang
 
         // Function to start particle creation with specified frequency
-        function startParticleCreation(frequency) {
+        function startParticleCreation(frequency, isRain) {
             if (particleIntervalId) {
                 clearInterval(particleIntervalId); // Clear any existing interval
             }
-            particleIntervalId = setInterval(createParticle, frequency);
+            particleIntervalId = setInterval(() => createParticle(isRain), frequency);
         }
 
         // Thêm sự kiện khi di chuột vào hộp nội dung chính
@@ -422,25 +444,25 @@
             mainContentBox.style.borderColor = 'rgba(255, 255, 255, 1)'; /* Viền rõ ràng hơn */
             
             // Hiệu ứng hạt mờ dần khi chuột vào (chế độ lãng mạn)
-            isBlizzardMode = false;
+            isRomanticMode = true;
             particleContainer.style.opacity = '0.3'; /* Mờ đi nhiều nhưng vẫn thấy được */
             particleContainer.style.backdropFilter = 'blur(5px)'; /* Mờ nhẹ để tạo sương mù */
-            startParticleCreation(150); // Giảm tần suất tạo hạt (lãng mạn)
+            startParticleCreation(150, false); // Giảm tần suất tạo hạt (tuyết/lá)
         });
 
         // Thêm sự kiện khi di chuột ra khỏi hộp nội dung chính
         mainContentBox.addEventListener('mouseleave', () => {
             // Khi chuột ra: background overlay trở lại mặc định, nội dung mờ tan như sương mù
             backgroundOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-            mainContentBox.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'; /* Mờ tan (5% độ mờ) */
+            mainContentBox.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'; /* Mờ tan (5% mờ) */
             mainContentBox.style.backdropFilter = 'blur(20px)'; /* Mờ mạnh hơn để tạo hiệu ứng sương mù */
             mainContentBox.style.borderColor = 'rgba(255, 255, 255, 0.1)'; /* Viền mờ hơn */
 
-            // Hiệu ứng hạt rõ và dày đặc hơn (bão tuyết) khi chuột ra
-            isBlizzardMode = true;
+            // Hiệu ứng hạt rõ và dày đặc hơn (mưa/tuyết) khi chuột ra
+            isRomanticMode = false;
             particleContainer.style.opacity = '1'; /* Rõ hoàn toàn */
-            particleContainer.style.backdropFilter = 'blur(50px)'; /* Làm mờ hạt CỰC MẠNH để tạo cảm giác bão tuyết */
-            startParticleCreation(5); // Tăng tần suất tạo hạt CỰC MẠNH để tạo bão tuyết
+            particleContainer.style.backdropFilter = 'blur(50px)'; /* Làm mờ hạt CỰC MẠNH để tạo cảm giác bão tuyết/mưa */
+            startParticleCreation(5, true); // Tăng tần suất tạo hạt CỰC MẠNH để tạo mưa/tuyết
         });
 
         // Xử lý gửi thông tin khách hàng và phản hồi
@@ -471,32 +493,52 @@
             alert('Cảm ơn bạn đã gửi thông tin và phản hồi! Ứng dụng email của bạn sẽ mở ra để hoàn tất việc gửi.');
         });
 
-        // ---- JavaScript cho hiệu ứng hạt tuyết ----
-        function createParticle() {
+        // ---- JavaScript cho hiệu ứng hạt (tuyết/lá/mưa) ----
+        function createParticle(isRain) {
             const particle = document.createElement('div');
-            particle.classList.add('particle');
-            particle.classList.add('snowflake'); /* Đảm bảo luôn là bông tuyết tròn */
+            
+            let size, duration, xDrift, rotationSpinDuration;
 
-            let size, duration, xDrift;
-
-            if (isBlizzardMode) {
-                // Chế độ BÃO TUYẾT (khi chuột ở ngoài)
-                size = Math.random() * 5 + 3; // Tuyết nhỏ: 3-8px
-                duration = Math.random() * 1 + 0.2; // Từ 0.2 đến 1.2 giây (rơi CỰC KỲ NHANH)
-                xDrift = (Math.random() - 0.5) * 1500; // Từ -750vw đến 750vw (trôi ngang CỰC KỲ MẠNH)
-            } else {
-                // Chế độ LÃNG MẠN (khi chuột vào)
-                size = Math.random() * 3 + 1; // Tuyết nhỏ hơn: 1-4px
-                duration = Math.random() * 8 + 4; // Từ 4 đến 12 giây (rơi từ từ)
-                xDrift = (Math.random() - 0.5) * 50; // Từ -25vw đến 25vw (trôi ngang nhẹ nhàng)
+            if (!isRomanticMode) { // Chế độ mưa/tuyết khi chuột ra
+                // Thay đổi kích thước và tốc độ rơi cho mưa nhỏ và chậm hơn
+                size = Math.random() * 3 + 1; // Kích thước nhỏ hơn: từ 1px đến 4px
+                duration = Math.random() * 8 + 5; // Rơi chậm hơn: từ 5s đến 13s
+                xDrift = (Math.random() - 0.5) * 50; // Trôi ngang nhẹ hơn
+                if (isRain) {
+                    particle.classList.add('particle', 'rain');
+                    particle.style.transform = `scaleY(2)`; // Kéo dài giọt mưa
+                    particle.style.opacity = Math.random() * 0.4 + 0.3;
+                } else {
+                    particle.classList.add('particle', 'snowflake');
+                    particle.style.opacity = Math.random() * 0.6 + 0.4;
+                }
+            } else { // Chế độ lãng mạn khi chuột vào
+                size = Math.random() * 3 + 1;
+                duration = Math.random() * 8 + 4;
+                xDrift = (Math.random() - 0.5) * 50;
+                rotationSpinDuration = Math.random() * 5 + 3;
+                
+                const isSnowflake = Math.random() < 0.7; // 70% tuyết, 30% lá
+                if (isSnowflake) {
+                    particle.classList.add('particle', 'snowflake');
+                } else {
+                    particle.classList.add('particle', 'leaf');
+                }
             }
 
             particle.style.width = `${size}px`;
-            particle.style.height = `${size}px`;
+            particle.style.height = `${isRain ? size * 2 : size}px`; // Giọt mưa dài hơn
             particle.style.left = `${Math.random() * 100}vw`;
             particle.style.animationDuration = `${duration}s`;
             particle.style.setProperty('--x-drift', `${xDrift}vw`);
             particle.style.animationDelay = `-${Math.random() * duration}s`; // Độ trễ animation ngẫu nhiên
+
+            // Nếu là lá, thêm độ xoay ngẫu nhiên
+            if (particle.classList.contains('leaf')) {
+                const rotation = Math.random() * 360;
+                particle.style.setProperty('--leaf-rotation', `${rotation}deg`);
+                particle.style.animationDuration = `${duration}s, ${rotationSpinDuration}s`; // Thêm animation spin
+            }
 
             particleContainer.appendChild(particle);
 
@@ -506,10 +548,8 @@
             }, duration * 1000);
         }
 
-        // Bắt đầu tạo hạt với tần suất mặc định (bão tuyết mạnh)
-        startParticleCreation(5); // Mật độ hạt CỰC KỲ MẠNH khi trang tải (5ms)
+        // Bắt đầu tạo hạt với tần suất mặc định (lãng mạn)
+        startParticleCreation(150, false);
     </script>
 </body>
 </html>
-
-
