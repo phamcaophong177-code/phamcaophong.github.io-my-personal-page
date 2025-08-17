@@ -11,12 +11,12 @@
         body {
             font-family: "Inter", sans-serif;
             /* Đây là nơi bạn có thể thay đổi URL ảnh nền của mình */
-            background-image: url('https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/501207992_122249941046205763_7111883970957905367_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=lb_LOcvG8KoQ7kNvwE13v3k&_nc_oc=AdmZbJnLzcwLfkxII_xrvjtIR646-YUHsN_LXJHwkS5X4839n94HeJ_efLlQqkEb8jCedaMlu_5Er-TZxNVNp3fg&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=ZXsh4lx1UGGLzFl0KsiqcA&oh=00_AfWS8_39Ix8IRFplUiPX9haaPZ7SbRHvUIztXVLqVN9VHA&oe=68A64202');
+            background-image: url('[https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/501207992_122249941046205763_7111883970957905367_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=lb_LOcvG8KoQ7kNvwE13v3k&_nc_oc=AdmZbJnLzcwLfkxII_xrvjtIR646-YUHsN_LXJHwkS5X4839n94HeJ_efLlQqkEb8jCedaMlu_5Er-TZxNVNp3fg&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=ZXsh4lx1UGGLzFl0KsiqcA&oh=00_AfWS8_39Ix8IRFplUiPX9haaPZ7SbRHvUIztXVLqVN9VHA&oe=68A64202](https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/501207992_122249941046205763_7111883970957905367_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=lb_LOcvG8KoQ7kNvwE13v3k&_nc_oc=AdmZbJnLzcwLfkxII_xrvjtIR646-YUHsN_LXJHwkS5X4839n94HeJ_efLlKqkEb8jCedaMlu_5Er-TZxNVNp3fg&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=lOx7i34Q8YYNnhWnrZUfgw&oh=00_AfVzRb7DJGWLHMfmqyrkfLBl5deEzkQFbij-G3gn-LgmLA&oe=68A64202)');
             background-size: cover; /* Đảm bảo ảnh bao phủ toàn bộ màn hình */
             background-position: center; /* Căn giữa ảnh nền */
             background-attachment: fixed; /* Giữ ảnh nền cố định khi cuộn */
             margin: 0;
-            /* Đã loại bỏ: overflow: hidden; để cho phép cuộn trang */
+            overflow: hidden; /* Ẩn thanh cuộn để hiệu ứng tuyết không bị cắt */
         }
 
         /* Lớp phủ (overlay) điều khiển độ đậm của background */
@@ -31,10 +31,21 @@
             transition: background-color 0.5s ease; /* Hiệu ứng chuyển đổi mượt mà */
         }
 
+        /* Vùng chứa bông tuyết */
+        #snowflake-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Không cho phép tương tác với chuột */
+            z-index: 5; /* Nằm trên lớp phủ nền nhưng dưới nội dung chính */
+        }
+
         /* Vùng bọc nội dung chính, đảm bảo nội dung nằm trên lớp phủ và được căn giữa */
         .content-wrapper {
             position: relative;
-            z-index: 1; /* Nằm trên lớp phủ */
+            z-index: 10; /* Nằm trên lớp phủ và bông tuyết */
             display: flex;
             flex-direction: column; /* Cho phép các phần tử con xếp dọc */
             justify-content: center; /* Căn giữa theo chiều ngang */
@@ -172,10 +183,37 @@
         .star-rating label:hover ~ input[type="radio"]:checked ~ label {
             color: #ffc107;
         }
+
+        /* ---- CSS cho hiệu ứng bông tuyết ---- */
+        .snowflake {
+            position: absolute;
+            background-color: #fff; /* Màu trắng */
+            border-radius: 50%; /* Hình tròn */
+            opacity: 0; /* Bắt đầu với độ trong suốt bằng 0 */
+            animation: snowflake-fall linear infinite;
+        }
+
+        @keyframes snowflake-fall {
+            0% {
+                transform: translateY(-10vh) translateX(0); /* Bắt đầu từ trên cao */
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8; /* Hiện rõ dần */
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh) translateX(var(--x-drift)); /* Rơi xuống và trôi ngang */
+                opacity: 0; /* Biến mất khi chạm đáy */
+            }
+        }
     </style>
 </head>
 <body>
     <div id="background-overlay"></div> <!-- Lớp phủ nền động -->
+    <div id="snowflake-container"></div> <!-- Vùng chứa bông tuyết -->
 
     <div class="content-wrapper">
         <div id="main-content-box" class="rounded-xl shadow-lg p-8 md:p-12 max-w-4xl w-full mx-auto">
@@ -345,6 +383,7 @@
         const mainContentBox = document.getElementById('main-content-box');
         const backgroundOverlay = document.getElementById('background-overlay');
         const customerFeedbackForm = document.getElementById('customerFeedbackForm'); // Đã đổi ID form
+        const snowflakeContainer = document.getElementById('snowflake-container'); // Lấy vùng chứa bông tuyết
 
         // Thêm sự kiện khi di chuột vào hộp nội dung chính
         mainContentBox.addEventListener('mouseenter', () => {
@@ -404,6 +443,42 @@
             // Tùy chọn: Xóa form sau khi gửi
             // customerFeedbackForm.reset();
         });
+
+        // ---- JavaScript cho hiệu ứng bông tuyết ----
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+
+            // Kích thước bông tuyết ngẫu nhiên (nhỏ và vừa)
+            const size = Math.random() * 3 + 2; // Từ 2px đến 5px
+            snowflake.style.width = `${size}px`;
+            snowflake.style.height = `${size}px`;
+
+            // Vị trí bắt đầu ngẫu nhiên (từ 0% đến 100% chiều rộng màn hình)
+            snowflake.style.left = `${Math.random() * 100}vw`;
+
+            // Tốc độ rơi ngẫu nhiên
+            const duration = Math.random() * 10 + 5; // Từ 5 đến 15 giây
+            snowflake.style.animationDuration = `${duration}s`;
+
+            // Độ trôi ngang ngẫu nhiên
+            const xDrift = (Math.random() - 0.5) * 100; // Từ -50vw đến 50vw
+            snowflake.style.setProperty('--x-drift', `${xDrift}vw`);
+
+            // Độ trễ animation ngẫu nhiên để bông tuyết xuất hiện không đồng loạt
+            snowflake.style.animationDelay = `-${Math.random() * duration}s`; // Bắt đầu từ giữa animation
+
+            snowflakeContainer.appendChild(snowflake);
+
+            // Xóa bông tuyết sau khi rơi xong để tối ưu hiệu suất
+            setTimeout(() => {
+                snowflake.remove();
+            }, duration * 1000);
+        }
+
+        // Tạo bông tuyết mới liên tục
+        // Điều chỉnh tần suất tạo bông tuyết để có mật độ phù hợp
+        setInterval(createSnowflake, 200); // Tạo một bông tuyết mới mỗi 200ms
     </script>
 </body>
 </html>
