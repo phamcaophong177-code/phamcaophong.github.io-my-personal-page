@@ -1,12 +1,156 @@
-<section id="quocgia">
-  <div class="overlay">
-    <h2>Quốc Gia Du Học</h2>
-    <p>Thông tin chi phí, lương, đặc trưng du học các nước như Nhật, Hàn, Mỹ, Thụy Sĩ...</p>
-    <ul style="text-align:left;max-width:460px;margin:25px auto 0;line-height:2;">
-      <li><b>Chi phí du học</b> từng nước (tham khảo menu con)</li>
-      <li><b>Lương làm thêm</b> khi là du học sinh</li>
-      <li><b>Học bổng và hỗ trợ tài chính</b></li>
-      <li><b>Môi trường sống & học tập</b></li>
-    </ul>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>So Sánh Du Học Nhật - Hàn - Mỹ - Thụy Sĩ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body
+  class="bg-gradient-to-br from-white to-blue-100 min-h-screen font-sans"
+  style="
+    background-image: url('https://edulinks.vn/wp-content/uploads/2018/06/the-gioi-du-hoc-1024x510.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+  "
+>
+  <div class="max-w-4xl mx-auto px-4 py-8 bg-white/85 rounded-2xl shadow-xl backdrop-blur-sm">
+    <header class="mb-8 text-center">
+      <h1 class="text-3xl md:text-4xl font-extrabold text-blue-800 mb-2">
+        So sánh nổi bật & khó khăn khi du học các nước Nhật, Hàn, Mỹ, Thụy Sĩ
+      </h1>
+      <p class="text-base md:text-lg text-gray-600">
+        Thông tin chi phí – mức lương thực tế – rào cản văn hóa & ngôn ngữ
+      </p>
+    </header>
+    <section class="overflow-x-auto">
+      <table class="min-w-full border-collapse bg-white rounded-xl shadow">
+        <thead>
+          <tr class="bg-blue-100">
+            <th class="p-3 border-b-2">Quốc gia</th>
+            <th class="p-3 border-b-2">Điểm nổi bật</th>
+            <th class="p-3 border-b-2">Khó khăn chính</th>
+            <th class="p-3 border-b-2">Chi phí 1 năm <br> (USD, tham khảo)</th>
+            <th class="p-3 border-b-2">Lương trung bình <br> (sau tốt nghiệp)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Nhật Bản -->
+          <tr>
+            <td class="p-3 border-b font-semibold text-red-600">🇯🇵 Nhật Bản</td>
+            <td class="p-3 border-b text-gray-700">
+              <ul class="list-disc pl-5 space-y-1">
+                <li>Môi trường học tập kỷ luật, chú trọng công nghệ và kỹ thuật.</li>
+                <li>Chính sách làm thêm rộng rãi cho du học sinh.</li>
+                <li>Cơ hội ở lại làm việc sau tốt nghiệp cao.</li>
+              </ul>
+            </td>
+            <td class="p-3 border-b text-gray-700">
+              <ul class="list-disc pl-5 space-y-1">
+                <li>Rào cản ngôn ngữ: Tiếng Nhật bắt buộc phải tốt để học và làm việc.</li>
+                <li>Văn hóa kỷ luật cao, áp lực học tập & sinh hoạt lớn.</li>
+                <li>Chi phí sinh hoạt tại Tokyo, Osaka khá cao.</li>
+              </ul>
+            </td>
+            <td class="p-3 border-b text-gray-800">
+              <b>8,000 – 12,000</b> USD<br>
+              (học phí + sinh hoạt, tỉnh nhỏ rẻ hơn)
+            </td>
+            <td class="p-3 border-b text-gray-800">
+              <b>2,200 – 3,000</b> USD/tháng<br>
+              (tương đương ~25 – 36k USD/năm, ngành kỹ thuật & CNTT cao hơn)
+            </td>
+          </tr>
+          <!-- Hàn Quốc -->
+          <tr class="bg-blue-50">
+            <td class="p-3 border-b font-semibold text-blue-500">🇰🇷 Hàn Quốc</td>
+            <td class="p-3 border-b text-gray-700">
+              <ul class="list-disc pl-5 space-y-1">
+                <li>Cơ hội học bổng lớn, ngành học đa dạng, môi trường hiện đại.</li>
+                <li>Văn hóa gần gũi với Việt Nam, dễ thích nghi.</li>
+                <li>Nhiều cơ hội thực tập, làm thêm trong ngành giải trí, công nghệ, kinh doanh.</li>
+              </ul>
+            </td>
+            <td class="p-3 border-b text-gray-700">
+              <ul class="list-disc pl-5 space-y-1">
+                <li>Yêu cầu tiếng Hàn (TOPIK 3+) để học và làm việc.</li>
+                <li>Khó xin việc nếu không giỏi tiếng Hàn.</li>
+                <li>Cạnh tranh cao, áp lực thi cử lớn.</li>
+              </ul>
+            </td>
+            <td class="p-3 border-b text-gray-800">
+              <b>9,000 – 13,000</b> USD<br>
+              (đã gồm ăn ở, học phí các trường công lập)
+            </td>
+            <td class="p-3 border-b text-gray-800">
+              <b>2,000 – 2,800</b> USD/tháng<br>
+              (ngành IT, kỹ thuật, kinh tế)
+            </td>
+          </tr>
+          <!-- Mỹ -->
+          <tr>
+            <td class="p-3 border-b font-semibold text-green-700">🇺🇸 Mỹ</td>
+            <td class="p-3 border-b text-gray-700">
+              <ul class="list-disc pl-5 space-y-1">
+                <li>Nền giáo dục hàng đầu thế giới, đa dạng ngành nghề.</li>
+                <li>Môi trường sáng tạo, cơ hội việc làm, định cư rộng mở.</li>
+                <li>Bằng cấp quốc tế, dễ chuyển đổi ở nhiều nước.</li>
+              </ul>
+            </td>
+            <td class="p-3 border-b text-gray-700">
+              <ul class="list-disc pl-5 space-y-1">
+                <li>Chi phí học & sống rất cao, xin visa và học bổng cạnh tranh.</li>
+                <li>Áp lực tự lập, sốc văn hóa ban đầu lớn.</li>
+                <li>Khó ở lại làm việc dài hạn nếu không có bằng cấp tốt hoặc ngành “hot”.</li>
+              </ul>
+            </td>
+            <td class="p-3 border-b text-gray-800">
+              <b>28,000 – 45,000</b> USD<br>
+              (học phí + sinh hoạt tại thành phố lớn, trường top có thể cao hơn)
+            </td>
+            <td class="p-3 border-b text-gray-800">
+              <b>4,500 – 6,500</b> USD/tháng<br>
+              (tương đương ~55 – 80k USD/năm, ngành STEM, tài chính, IT cao hơn)
+            </td>
+          </tr>
+          <!-- Thụy Sĩ -->
+          <tr class="bg-blue-50">
+            <td class="p-3 border-b font-semibold text-gray-700">🇨🇭 Thụy Sĩ</td>
+            <td class="p-3 border-b text-gray-700">
+              <ul class="list-disc pl-5 space-y-1">
+                <li>Đỉnh cao đào tạo quản trị khách sạn, nhà hàng, tài chính.</li>
+                <li>Bằng cấp được công nhận toàn cầu, thực tập lương cao.</li>
+                <li>Chất lượng sống, an ninh, môi trường tuyệt vời.</li>
+              </ul>
+            </td>
+            <td class="p-3 border-b text-gray-700">
+              <ul class="list-disc pl-5 space-y-1">
+                <li>Chi phí học tập và sinh hoạt cao nhất châu Âu.</li>
+                <li>Đòi hỏi tiếng Anh tốt, muốn làm việc lâu dài phải biết thêm tiếng Pháp/Đức/Ý.</li>
+                <li>Cạnh tranh với sinh viên châu Âu về việc làm sau tốt nghiệp.</li>
+              </ul>
+            </td>
+            <td class="p-3 border-b text-gray-800">
+              <b>30,000 – 50,000</b> USD<br>
+              (đa số là học phí ngành quản trị khách sạn & kinh doanh, bao gồm thực tập)
+            </td>
+            <td class="p-3 border-b text-gray-800">
+              <b>3,000 – 5,500</b> USD/tháng<br>
+              (quản trị khách sạn, nhà hàng, thực tập hưởng lương có thể lên đến 2,000 USD/tháng)
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <div class="mt-8 max-w-2xl mx-auto text-sm text-gray-500">
+      <b>Lưu ý:</b> Chi phí và lương trung bình chỉ mang tính tham khảo, thay đổi theo vùng, trường, ngành học và từng năm.<br>
+      Lương thực tế còn phụ thuộc vào kỹ năng, kinh nghiệm, ngành nghề, khả năng ngoại ngữ và nhu cầu thị trường tại thời điểm bạn tốt nghiệp.
+    </div>
+    <footer class="mt-10 text-center text-gray-400 text-xs">
+      © 2025 - Tổng hợp từ kinh nghiệm thực tế & các nguồn tư vấn du học uy tín.
+    </footer>
   </div>
-</section>
+</body>
+</html>
