@@ -445,7 +445,7 @@
         mainContentBox.addEventListener('mouseleave', () => {
             // Khi chuột ra: background overlay trở lại mặc định, nội dung mờ tan như sương mù
             backgroundOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-            mainContentBox.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'; /* Mờ tan (5% mờ) */
+            mainContentBox.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'; /* Mờ tan (5% độ mờ) */
             mainContentBox.style.backdropFilter = 'blur(20px)'; /* Mờ mạnh hơn để tạo hiệu ứng sương mù */
             mainContentBox.style.borderColor = 'rgba(255, 255, 255, 0.1)'; /* Viền mờ hơn */
 
