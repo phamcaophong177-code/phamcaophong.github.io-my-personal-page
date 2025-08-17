@@ -16,7 +16,7 @@
             background-position: center; /* Căn giữa ảnh nền */
             background-attachment: fixed; /* Giữ ảnh nền cố định khi cuộn */
             margin: 0;
-            overflow: hidden; /* Ẩn thanh cuộn của body để hiệu ứng tuyết không bị cắt */
+            /* Đã loại bỏ: overflow: hidden; để cho phép cuộn trang */
         }
 
         /* Lớp phủ (overlay) điều khiển độ đậm của background */
@@ -40,9 +40,9 @@
             height: 100%;
             pointer-events: none; /* Không cho phép tương tác với chuột */
             z-index: 5; /* Nằm trên lớp phủ nền nhưng dưới nội dung chính */
-            overflow: hidden; /* Ẩn thanh cuộn của riêng container */
+            overflow: hidden; /* Quan trọng: Ẩn thanh cuộn của riêng container */
             opacity: 1; /* Luôn rõ */
-            backdrop-filter: blur(40px); /* Luôn mờ mạnh để tạo hiệu ứng bão tuyết */
+            backdrop-filter: blur(50px); /* Luôn mờ CỰC MẠNH để tạo hiệu ứng bão tuyết */
             transition: opacity 0.5s ease, backdrop-filter 0.5s ease; /* Chuyển đổi mượt mà */
         }
 
@@ -61,7 +61,8 @@
         /* Hộp nội dung chính (phần trắng) */
         #main-content-box {
             /* Ảnh nền của khung nội dung chính: ảnh đại diện Facebook của bạn */
-            background-image: url('https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/501207992_122249941046205763_7111883970957905367_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=lb_LOcvG8KoQ7kNvwE13v3k&_nc_oc=AdmZbJnLzcwLfkxII_xrvjtIR646-YUHsN_LXJHwkS5X4839n94HeJ_efLlQqkEb8jCedaMlu_5Er-TZxNVNp3fg&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=lOx7i34Q8YYNnhWnrZUfgw&oh=00_AfVzRb7DJGWLHMfmqyrkfLBl5deEzkQFbij-G3gn-LgmLA&oe=68A64202');
+            /* Vui lòng thay thế URL này bằng URL ảnh đại diện Facebook của bạn đã được tải lên dịch vụ lưu trữ ảnh công khai */
+            background-image: url('https://placehold.co/1200x800/87CEEB/FFFFFF?text=Anh+Dai+Dien+Cua+Ban'); /* Placeholder đáng tin cậy */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -452,8 +453,8 @@
 
             // Hiệu ứng hạt rõ và dày đặc hơn (bão tuyết) khi chuột ra
             particleContainer.style.opacity = '1'; /* Rõ hoàn toàn */
-            particleContainer.style.backdropFilter = 'blur(40px)'; /* Làm mờ hạt cực mạnh để tạo cảm giác bão tuyết */
-            startParticleCreation(5); // Tăng tần suất tạo hạt cực mạnh để tạo bão tuyết
+            particleContainer.style.backdropFilter = 'blur(50px)'; /* Làm mờ hạt CỰC MẠNH để tạo cảm giác bão tuyết */
+            startParticleCreation(5); // Tăng tần suất tạo hạt CỰC MẠNH để tạo bão tuyết
         });
 
         // Xử lý gửi thông tin khách hàng và phản hồi
@@ -498,7 +499,7 @@
             }
 
             // Kích thước ngẫu nhiên
-            const size = isSnowflake ? Math.random() * 15 + 10 : Math.random() * 20 + 15; // Tuyết 10-25px, Lá 15-35px (tăng kích thước đáng kể)
+            const size = isSnowflake ? Math.random() * 20 + 15 : Math.random() * 25 + 20; // Tuyết 15-35px, Lá 20-45px (tăng kích thước đáng kể)
             particle.style.width = `${size}px`;
             particle.style.height = `${size}px`;
 
@@ -506,11 +507,11 @@
             particle.style.left = `${Math.random() * 100}vw`;
 
             // Tốc độ rơi ngẫu nhiên
-            const duration = Math.random() * 1.5 + 0.5; // Từ 0.5 đến 2 giây (rơi CỰC KỲ NHANH)
+            const duration = Math.random() * 1 + 0.2; // Từ 0.2 đến 1.2 giây (rơi CỰC KỲ NHANH)
             particle.style.animationDuration = `${duration}s`;
 
             // Độ trôi ngang ngẫu nhiên (gió CỰC KỲ MẠNH)
-            const xDrift = (Math.random() - 0.5) * 1000; // Từ -500vw đến 500vw (tăng CỰC KỲ MẠNH độ trôi ngang)
+            const xDrift = (Math.random() - 0.5) * 1500; // Từ -750vw đến 750vw (tăng CỰC KỲ MẠNH độ trôi ngang)
             particle.style.setProperty('--x-drift', `${xDrift}vw`);
 
             // Độ trễ animation ngẫu nhiên để xuất hiện không đồng loạt
@@ -520,7 +521,7 @@
             if (!isSnowflake) {
                 const rotation = Math.random() * 360;
                 particle.style.setProperty('--leaf-rotation', `${rotation}deg`);
-                particle.style.animationDuration = `${duration}s, ${Math.random() * 1.5 + 0.5}s`; // Thêm animation spin nhanh hơn
+                particle.style.animationDuration = `${duration}s, ${Math.random() * 1 + 0.2}s`; // Thêm animation spin nhanh hơn
             }
 
             particleContainer.appendChild(particle);
@@ -532,7 +533,7 @@
         }
 
         // Bắt đầu tạo hạt với tần suất mặc định (bão tuyết mạnh)
-        startParticleCreation(5); // Mật độ hạt CỰC KỲ MẠNH khi trang tải (5ms)
+        startParticleCreation(1); // Mật độ hạt CỰC KỲ MẠNH khi trang tải (1ms)
     </script>
 </body>
 </html>
