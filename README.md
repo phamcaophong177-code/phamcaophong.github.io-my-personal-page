@@ -31,7 +31,7 @@
             transition: background-color 0.5s ease; /* Hiệu ứng chuyển đổi mượt mà */
         }
 
-        /* Vùng chứa bông tuyết và lá */
+        /* Vùng chứa bông tuyết */
         #particle-container {
             position: fixed;
             top: 0;
@@ -40,7 +40,7 @@
             height: 100%;
             pointer-events: none; /* Không cho phép tương tác với chuột */
             z-index: 5; /* Nằm trên lớp phủ nền nhưng dưới nội dung chính */
-            overflow: hidden; /* Quan trọng: Ẩn thanh cuộn của riêng container */
+            overflow: hidden; /* Quan trọng: Ẩn thanh cuộn của riêng container tuyết */
             opacity: 1; /* Mặc định: rõ (cho hiệu ứng bão tuyết) */
             backdrop-filter: blur(50px); /* Mặc định: mờ CỰC MẠNH để tạo hiệu ứng bão tuyết */
             transition: opacity 0.5s ease, backdrop-filter 0.5s ease; /* Chuyển đổi mượt mà */
@@ -204,12 +204,9 @@
         }
 
         .particle.snowflake {
-            /* Sử dụng SVG cho bông tuyết 5 cánh */
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M12 2L9.19 8.63L2 9.24l5.46 4.73L5.82 21l6.18-3.73l6.18 3.73l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            border-radius: 0; /* Bỏ border-radius để hiển thị hình dạng SVG */
+            /* Bông tuyết tròn nhỏ */
+            background-image: none; /* Loại bỏ SVG */
+            border-radius: 50%; /* Đảm bảo hình tròn */
         }
 
         .particle.leaf {
@@ -492,42 +489,28 @@
             const particle = document.createElement('div');
             particle.classList.add('particle');
 
-            let size, duration, xDrift, rotationSpinDuration;
+            let size, duration, xDrift; // Loại bỏ rotationSpinDuration vì không còn lá xoay
 
             if (isBlizzardMode) {
                 // Chế độ BÃO TUYẾT (khi chuột ở ngoài)
-                size = Math.random() * 20 + 15; // Tuyết 15-35px, Lá 20-45px (to)
+                size = Math.random() * 5 + 3; // Tuyết nhỏ: 3-8px
                 duration = Math.random() * 1 + 0.2; // Từ 0.2 đến 1.2 giây (rơi CỰC KỲ NHANH)
                 xDrift = (Math.random() - 0.5) * 1500; // Từ -750vw đến 750vw (trôi ngang CỰC KỲ MẠNH)
-                rotationSpinDuration = Math.random() * 1 + 0.2; // Xoay nhanh
             } else {
                 // Chế độ LÃNG MẠN (khi chuột vào)
-                size = Math.random() * 3 + 1; // Tuyết 1-4px, Lá 2-5px (nhỏ)
+                size = Math.random() * 3 + 1; // Tuyết nhỏ hơn: 1-4px
                 duration = Math.random() * 8 + 4; // Từ 4 đến 12 giây (rơi từ từ)
                 xDrift = (Math.random() - 0.5) * 50; // Từ -25vw đến 25vw (trôi ngang nhẹ nhàng)
-                rotationSpinDuration = Math.random() * 5 + 3; // Xoay từ từ
             }
 
-            const isSnowflake = Math.random() < 0.7; // 70% là tuyết, 30% là lá
-            if (isSnowflake) {
-                particle.classList.add('snowflake');
-            } else {
-                particle.classList.add('leaf');
-            }
-
+            // Luôn tạo bông tuyết tròn nhỏ
+            particle.classList.add('snowflake'); // Đảm bảo luôn là snowflake
             particle.style.width = `${size}px`;
             particle.style.height = `${size}px`;
             particle.style.left = `${Math.random() * 100}vw`;
             particle.style.animationDuration = `${duration}s`;
             particle.style.setProperty('--x-drift', `${xDrift}vw`);
             particle.style.animationDelay = `-${Math.random() * duration}s`; // Độ trễ animation ngẫu nhiên
-
-            // Nếu là lá, thêm độ xoay ngẫu nhiên
-            if (!isSnowflake) {
-                const rotation = Math.random() * 360;
-                particle.style.setProperty('--leaf-rotation', `${rotation}deg`);
-                particle.style.animationDuration = `${duration}s, ${rotationSpinDuration}s`; // Thêm animation spin
-            }
 
             particleContainer.appendChild(particle);
 
